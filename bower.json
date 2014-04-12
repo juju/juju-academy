@@ -21,6 +21,8 @@
   ],
   "dependencies": {
     "jquery": "~2.1.0",
-    "semantic-ui": "~0.15.5"
+    "semantic-ui": "~0.15.5",
+    "jquery.terminal": "~0.8.7",
+    "jquery-address": "*"
   }
 }

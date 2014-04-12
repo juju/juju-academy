@@ -7,26 +7,20 @@ to get people started up just as fast.
 
 # Installation
 
-You'll need Node.js to run this.
+You'll need bower to run this.
 
-    npm install
+    npm install -g bower
 
-Will fetch the dependencies
+Then install all the bower things
 
-    npm start
-
-Will spin up the server
-
-    http://localhost:3000
-
-Will be where to find the server.
+    bower install
 
 # Hacking
 
-Install testing/dev dependencies
-
-    npm install --with-dev
+Just do it
 
 ## Testing
 
-Run `npm test`, watch the output, success
+~~Run `npm test`, watch the output, success~~
+
+This will come soon enough

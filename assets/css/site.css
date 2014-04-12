@@ -1,0 +1,132 @@
+/*******************************
+            Global
+*******************************/
+
+html,
+body {
+  font-size: 15px;
+  height: 100%;
+}
+
+body {
+  font-family: "Ubuntu", "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+  background: #FFFFFF;
+  margin: 0px;
+  padding: 0px;
+  color: #555555;
+  text-rendering: optimizeLegibility;
+  min-width: 320px;
+}
+
+.ui.header {
+  font-family: "Ubuntu", 'Source Sans Pro', "Helvetica Neue", "Helvetica", "Arial", sans-serif;
+}
+
+code,
+div.terminal,
+div.cmd {
+  font-family: "Ubuntu Mono", monospace;
+}
+
+orange {
+  color: #dd4814;
+}
+
+div.terminal,
+div.cmd,
+div.cmd .cursor.blink {
+  font-size: 1rem;
+  background-color: #300A24;
+  color: #FFF;
+}
+
+div.terminal .terminal-output div div::selection,
+div.terminal .terminal-output div div a::selection,
+div.terminal .terminal-output div span::selection,
+div.cmd > span::selection,
+div.cmd .prompt span::selection,
+div.terminal > .cmd .cursor.blink {
+  background-color: #FFF !important;
+  color: #300A24 !important;
+}
+
+div.terminal {
+  height: 100%;
+  overflow-y: auto;
+}
+
+/*******************************
+            Global
+*******************************/
+
+/*-------------------
+        Sidebar
+--------------------*/
+
+#classroom .sidebar {
+  overflow: visible;
+}
+
+/*-------------------
+        Grid
+--------------------*/
+
+#classroom .grid {
+  height: 100%;
+}
+
+#classroom > .grid > .column {
+  height: 100%;
+}
+
+/*-------------------
+       Inbox
+--------------------*/
+
+#classroom .inbox.tab {
+  background-color: #FFFFFF;
+}
+
+#classroom .inbox.tab .item {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+#classroom .inbox.tab .item .rating {
+  margin-top: 0.2rem;
+}
+
+#classroom .inbox.tab .item .description {
+  margin-left: 2em;
+}
+
+#classroom .page {
+  float: right;
+  margin-top: 0.9em;
+}
+
+#classroom .middle.column h2 {
+  margin-top: 0em;
+}
+
+#classroom .right.column {
+  padding: 1em 2em;
+  background-color: #FAFAFA;
+}
+
+/*******************************
+          Responsive
+*******************************/
+
+@media only screen and (max-width : 1000px) {
+  #classroom .inbox .date {
+    float: none;
+    margin-bottom: 0.5em;
+  }
+}
+
+@media only screen and (max-width : 1250px) {
+  #classroom .left.column > .menu .item {
+    font-size: 1rem;
+  }
+}
