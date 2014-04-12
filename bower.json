@@ -1,0 +1,26 @@
+{
+  "name": "juju-academy",
+  "version": "0.0.1",
+  "homepage": "https://github.com/marcoceppi/juju-academy",
+  "authors": [
+    "Marco Ceppi <marco@ceppi.net>"
+  ],
+  "description": "Learn to use Juju",
+  "moduleType": [
+    "amd",
+    "node"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "~2.1.0",
+    "semantic-ui": "~0.15.5"
+  }
+}
