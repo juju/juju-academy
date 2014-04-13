@@ -60,6 +60,10 @@ div.terminal-output {
   padding-left: 0;
 }
 
+.center.aligned {
+  text-align: center;
+}
+
 /*******************************
  Global
 *******************************/
@@ -83,6 +87,8 @@ div.terminal-output {
 #classroom .grid {
   min-height: 100%;
   height: 100%;
+  bottom: 0;
+  margin-bottom: 0;
 }
 
 /*-------------------
