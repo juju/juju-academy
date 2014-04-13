@@ -24,7 +24,6 @@ div.terminal .terminal-output .format, .cmd .format,
 div.terminal {
     padding: 10px;
     position: relative;
-    overflow-y: scroll;
 }
 .cmd {
     padding: 0;
