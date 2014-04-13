@@ -9,19 +9,26 @@ load_lesson({
   "tasks": {
     "00-create-juju-home": {
       "name": "Create JUJU_HOME directory",
-      "match": "^juju (init|generate)$",
-      "reply": "A boilerplate environment configuration file has been written to ~/.juju/environments.yaml.\nEdit the file to configure your juju environment and run bootstrap.",
+      "validate": {
+        "match": "^juju (init|generate)$",
+        "echo": "A boilerplate environment configuration file has been written to ~/.juju/environments.yaml.\nEdit the file to configure your juju environment and run bootstrap."
+      },
       "hint": "To create the JUJU_HOME structure, run <code>juju init</code>"},
     "01-edit-environments-yaml": {
       "name": "Update credentials in <code>environments.yaml</code> file",
-      "match": "^edit ~/.juju/environments.yaml$",
-      "reply": "",
+      "validate": {
+        "match": "^edit ~/.juju/environments.yaml$",
+        "echo": "Launch an editor"
+      },
       "hint": "Use the <code>edit</code> command to open <code>~/.juju/environments.yaml</code>"},
     "02-switch-to-academy": {
       "name": "Switch to the \"academy\" environment",
       "hint": "You can view the current environment by running <code>juju switch</code> and change environments by running <code>juju switch [env]</code>",
-      "validate": "^juju switch academy$",
-      "reply": "amazon -> academy"}
+      "validate": {
+        "match": "^juju switch academy$",
+        "reply": "amazon -> academy"
+      }
+    }
   },
   "resources": {
     "~/.juju/environments.yaml": ""
