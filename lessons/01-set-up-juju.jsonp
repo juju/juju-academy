@@ -1,0 +1,30 @@
+load_lesson({
+  "name": "Setting up Juju",
+  "description": [
+    "After you've installed Juju, you'll need to create a \"Juju home\", edit a configuration file, then select your environment.",
+    "In order to start using Juju, you must first create a JUJU_HOME. JUJU_HOME, by default, resides in <code>~/.juju</code> and can be created by running <code>juju init</code>. Once created, several files and directories are created. The most important of these is <code>~/.juju/environments.yaml</code> which contains a boilerplate for all available environments in Juju.",
+    "After adding your details to <code>environments.yaml</code> you can select the environment you want to use by running <code>juju switch</code>. This command, when run without any paramenters, will show your current environment. If you supply an environment name it will switch all Juju commands to run against that environment instead. You can switch environments at any time while using Juju to manage multiple environments at one time",
+    "For this lesson, you'll need to create a JUJU_HOME, edit the <code>environments.yaml</code> file to include the credentials of \"demo\"/\"demo\" for the academy environment, and switch to that environment."
+  ],
+  "tasks": {
+    "00-create-juju-home": {
+      "name": "Create JUJU_HOME directory",
+      "match": "^juju (init|generate)$",
+      "reply": "A boilerplate environment configuration file has been written to ~/.juju/environments.yaml.\nEdit the file to configure your juju environment and run bootstrap.",
+      "hint": "To create the JUJU_HOME structure, run <code>juju init</code>"},
+    "01-edit-environments-yaml": {
+      "name": "Update credentials in <code>environments.yaml</code> file",
+      "match": "^edit ~/.juju/environments.yaml$",
+      "reply": "",
+      "hint": "Use the <code>edit</code> command to open <code>~/.juju/environments.yaml</code>"},
+    "02-switch-to-academy": {
+      "name": "Switch to the \"academy\" environment",
+      "hint": "You can view the current environment by running <code>juju switch</code> and change environments by running <code>juju switch [env]</code>",
+      "validate": "^juju switch academy$",
+      "reply": "amazon -> academy"}
+  },
+  "resources": {
+    "~/.juju/environments.yaml": ""
+  }
+});
+

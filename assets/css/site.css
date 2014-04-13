@@ -1,5 +1,5 @@
 /*******************************
-            Global
+  Global
 *******************************/
 
 html,
@@ -11,8 +11,8 @@ body {
 body {
   font-family: "Ubuntu", "Open Sans", "Helvetica Neue", "Helvetica", "Arial", sans-serif;
   background: #FFFFFF;
-  margin: 0px;
-  padding: 0px;
+  margin: 0;
+  padding: 0;
   color: #555555;
   text-rendering: optimizeLegibility;
   min-width: 320px;
@@ -33,9 +33,11 @@ orange {
 }
 
 div.terminal,
+div.terminal-output,
+div.terminal-output div,
 div.cmd,
 div.cmd .cursor.blink {
-  font-size: 1rem;
+  font-size: 1.2rem;
   background-color: #300A24;
   color: #FFF;
 }
@@ -50,64 +52,42 @@ div.terminal > .cmd .cursor.blink {
   color: #300A24 !important;
 }
 
-div.terminal {
-  height: 100%;
+div.terminal-output {
   overflow-y: auto;
 }
 
+.ui.header .icon+.content {
+  padding-left: 0;
+}
+
 /*******************************
-            Global
+ Global
 *******************************/
 
 /*-------------------
-        Sidebar
+  Sidebar
 --------------------*/
 
-#classroom .sidebar {
-  overflow: visible;
+#classroom .sidebar h1 {
+  cursor: pointer;
+}
+
+#classroom .sidebar h2.ui.header {
+  margin-top: 0;
 }
 
 /*-------------------
-        Grid
+  Grid
 --------------------*/
 
 #classroom .grid {
-  height: 100%;
-}
-
-#classroom > .grid > .column {
+  min-height: 100%;
   height: 100%;
 }
 
 /*-------------------
-       Inbox
+ Inbox
 --------------------*/
-
-#classroom .inbox.tab {
-  background-color: #FFFFFF;
-}
-
-#classroom .inbox.tab .item {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-#classroom .inbox.tab .item .rating {
-  margin-top: 0.2rem;
-}
-
-#classroom .inbox.tab .item .description {
-  margin-left: 2em;
-}
-
-#classroom .page {
-  float: right;
-  margin-top: 0.9em;
-}
-
-#classroom .middle.column h2 {
-  margin-top: 0em;
-}
 
 #classroom .right.column {
   padding: 1em 2em;
@@ -115,7 +95,7 @@ div.terminal {
 }
 
 /*******************************
-          Responsive
+  Responsive
 *******************************/
 
 @media only screen and (max-width : 1000px) {
