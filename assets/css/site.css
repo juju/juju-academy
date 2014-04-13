@@ -80,6 +80,10 @@ div.terminal-output {
   margin-top: 0;
 }
 
+#classroom .sidebar .list .item > .content > .sub {
+  font-weight: 400;
+}
+
 /*-------------------
   Grid
 --------------------*/
