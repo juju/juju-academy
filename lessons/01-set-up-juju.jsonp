@@ -8,11 +8,8 @@ load_lesson({
   ],
   "tasks": {
     "00-create-juju-home": {
-      "name": "Create JUJU_HOME directory",
-      "validate": {
-        "match": "^juju (init|generate)$",
-        "echo": "A boilerplate environment configuration file has been written to ~/.juju/environments.yaml.\nEdit the file to configure your juju environment and run bootstrap."
-      },
+      "name": "Create a Juju environments file",
+      "validate": "^juju (init|generate)$",
       "hint": "To create the JUJU_HOME structure, run <code>juju init</code>"},
     "01-edit-environments-yaml": {
       "name": "Update credentials in <code>environments.yaml</code> file",
