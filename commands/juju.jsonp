@@ -1,0 +1,44 @@
+load_commands([
+  function(cmd, term, next) {
+    if(!cmd.match('^juju switch$')) {
+      return next();
+    }
+    term.echo('amazon');
+  },
+  function(cmd, term, next) {
+    env = cmd.match('^juju switch .*');
+    if(!env) {
+      return next();
+    }
+    term.echo('amazon -> ' + env);
+  },
+  function(cmd, term, next) {
+    if(!cmd.match("^juju (init|generate)$")) {
+      return next();
+    }
+    if(window.file.exists('~/.juju/environments.yaml')) {
+      return term.echo("ERROR A juju environment configuration already exists.");
+    }
+
+    window.file.save("~/.juju/environments.yaml", "default: hey\n  amazon:\n    key: val\n  academy:\n    user: test\n    value: demo");
+    term.echo("A boilerplate environment configuration file has been written to ~/.juju/environments.yaml.\nEdit the file to configure your juju environment and run bootstrap.");
+  },
+  function(cmd, term, next) {
+    f = cmd.match('^edit .*');
+    if(!f) {
+      return next();
+    }
+    $('.editor')
+      .modal('setting', {
+        onDeny: function(){
+          term.echo('File not edited');
+        },
+        onApprove: function() {
+          window.file.save(f, this.children('.contents textarea').val());
+        }
+      })
+      .modal('show')
+      .children('.contents textarea')
+      .val(window.file.load(f));
+  }
+]);
