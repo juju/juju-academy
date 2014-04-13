@@ -15,20 +15,13 @@ load_lesson({
       "name": "Update credentials in <code>environments.yaml</code> file",
       "validate": {
         "match": "^edit ~/.juju/environments.yaml$",
-        "echo": "Launch an editor"
-      },
+        "echo": "Launch an editor"},
       "hint": "Use the <code>edit</code> command to open <code>~/.juju/environments.yaml</code>"},
     "02-switch-to-academy": {
       "name": "Switch to the \"academy\" environment",
       "hint": "You can view the current environment by running <code>juju switch</code> and change environments by running <code>juju switch [env]</code>",
-      "validate": {
-        "match": "^juju switch academy$",
-        "reply": "amazon -> academy"
-      }
+      "validate": "^juju switch academy$"
     }
-  },
-  "resources": {
-    "~/.juju/environments.yaml": ""
   }
 });
 
