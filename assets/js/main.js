@@ -13,6 +13,21 @@ function load_commands(cmds) {
   });
 }
 
+function ready_set_next() {
+  ready = true;
+  $('.sidebar .tasks .item').each(function() {
+    if(!$(this).children('i.icon').hasClass('green')) {
+      ready = false;
+    }
+  });
+
+  $('.sidebar .tasks .item').promise().done(function() {
+    if(ready) {
+      $('.sidebar .button.next').removeClass('disabled');
+    }
+  });
+}
+
 function load_lesson(l) {
   $('.sidebar h1 .content').text(l.name);
   if(l.description instanceof Array) {
@@ -74,6 +89,7 @@ function load_lesson(l) {
             .children('.sub')
               .slideUp();
         }
+        ready_set_next();
         next();
       });
     };
