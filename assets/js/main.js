@@ -25,7 +25,7 @@ function load_lesson(l) {
   // TODO: Holy fucking shit refactor this
   $.each(l.tasks, function(k, v) {
     var t = task_line.clone(),
-        runner;
+        r;
 
     t.children('i.icon')
       .removeClass('green')
@@ -43,28 +43,40 @@ function load_lesson(l) {
     if($.isFunction(v.validate)) {
       // Someone has a complex function, which is cool, we just need to wrap it
       // to manage state of task
-      runner = function(cmd, term, next) {
-        f = v.validate(cmd, term, next);
-        if(f) {
-          $('#' + k + ' i.icon').addClass('green').addClass('ok').removeClass('blank');
-        }
-      };
+      r = v.validate;
     } else {
       var match = v.validate.match;
       if(typeof v.validate === "string") {
         match = v.validate;
       }
-      runner = function(cmd, term, next) {
+
+      r = function(cmd, term, next) {
         if(!cmd.match(match)) {
-          return next();
+          return next(true);
         }
-        $('#' + k + ' i.icon').addClass('green').addClass('ok').removeClass('blank');
+
         if(v.validate.echo) {
           term.echo(v.validate.echo);
         }
         next();
       };
     }
+
+    var runner = function(cmd, term, next) {
+      r(cmd, term, function(err) {
+        if(!err) {
+          $('#' + k + ' i.icon')
+            .addClass('green')
+            .addClass('ok')
+            .removeClass('blank');
+          $('#' + k + ' .content')
+            .removeClass('header')
+            .children('.sub')
+              .slideUp();
+        }
+        next();
+      });
+    };
     window.commands.add(runner, true);
   });
 
