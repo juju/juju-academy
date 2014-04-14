@@ -29,5 +29,44 @@ load_commands([
       return next();
     }
     term.error("This isn't a real terminal. Everying you'll do is going to be run from ~");
-  }
+  },
+  function(cmd, term, next) {
+    if(!cmd.match('^whoami$')) {
+      return next();
+    }
+    term.error('Who are we really? This is a fake terminal, no need to have an existential crisis');
+  },
+  function(cmd, term, next) {
+    if(!cmd.match('^ps$|^ps (.*)?')) {
+      return next();
+    }
+    term.echo('  PID TTY          TIME CMD');
+    term.echo('    1 ?        99:99:99 init');
+  },
+  function(cmd, term, next) {
+    var k = cmd.match('^kill$');
+    var ka = cmd.match('^kill ([0-9]+)$');
+    var kta = cmd.match('^kill \-([0-9]+) ([0-9]+)$');
+    if(!k && !ka && !kta) {
+      return next();
+    }
+    var process_id = null
+    var no_such_proc = "kill: ({0}) - No such process"
+    if(kta) {
+      process_id = kta[2];
+    } else if(ka) {
+      process_id = ka[1];
+    }
+
+    if(process_id) {
+      if(process_id == 1) {
+        if(confirm("You are about to kill init, are you sure?")) {
+          close();
+        }
+        return term.echo("That was a close one, don't kill init!");
+      }
+      return term.error(no_such_proc.format(kta[2]));
+    }
+    return term.error('Just a demo, there is no need to be upset');
+  },
 ]);
