@@ -1,5 +1,35 @@
 load_commands([
   function(cmd, term, next) {
+    if(!cmd.match('^juju$')) {
+      return next();
+    }
+
+    term.echo("Juju -- devops distilled https://juju.ubuntu.com");
+    term.echo("");
+    term.echo("Juju provides easy, intelligent service orchestration on top of environments");
+    term.echo("such as Amazon EC2, HP Cloud, OpenStack, MaaS, or your own local machine.");
+    term.echo("");
+    term.echo("Basic commands:");
+    term.echo("juju init             generate boilerplate configuration for juju environments");
+    term.echo("juju bootstrap        start up an environment from scratch");
+    term.echo("");
+    term.echo("juju deploy           deploy a new service");
+    term.echo("juju add-relation     add a relation between two services");
+    term.echo("juju expose           expose a service");
+    term.echo("");
+    term.echo("juju help bootstrap   more help on e.g. bootstrap command");
+    term.echo("juju help commands    list all commands");
+    term.echo("juju help glossary    glossary of terms");
+    term.echo("juju help topics      list all help topics");
+    term.echo("");
+    term.echo("Provider information:");
+    term.echo("juju help azure-provider       use on Windows Azure");
+    term.echo("juju help ec2-provider         use on Amazon EC2");
+    term.echo("juju help hpcloud-provider     use on HP Cloud");
+    term.echo("juju help local-provider       use on this computer");
+    term.echo("juju help openstack-provider   use on OpenStack");
+  },
+  function(cmd, term, next) {
     if(!cmd.match('^juju switch$')) {
       return next();
     }
