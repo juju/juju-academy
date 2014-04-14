@@ -23,24 +23,5 @@ load_commands([
 
     window.file.save("~/.juju/environments.yaml", "default: hey\n  amazon:\n    key: val\n  academy:\n    user: test\n    value: demo");
     term.echo("A boilerplate environment configuration file has been written to ~/.juju/environments.yaml.\nEdit the file to configure your juju environment and run bootstrap.");
-  },
-  function(cmd, term, next) {
-    m = cmd.match('^edit (.*)');
-    if(!m) {
-      return next();
-    }
-    f = m[1]
-    $('.editor')
-      .modal('setting', {
-        onDeny: function(){
-          term.echo('File not edited');
-        },
-        onApprove: function() {
-          window.file.save(f, this.find('.contents textarea').val());
-        }
-      })
-      .modal('show')
-      .children('.contents textarea')
-      .val(window.file.load(f));
   }
 ]);

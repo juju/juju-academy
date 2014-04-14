@@ -129,6 +129,7 @@ $(document).ready(function() {
     completion: true
   });
 
+  $.getScript("commands/builtins.jsonp");
   $.getScript("commands/juju.jsonp");
   $.getScript("lessons/01-set-up-juju.jsonp");
 });
