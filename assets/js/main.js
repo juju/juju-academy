@@ -6,6 +6,7 @@ Last login: " + new Date().toString();
 
 window.commands = new Commands();
 window.file = new Files();
+window.lessons = [];
 
 function load_commands(cmds) {
   $.each(cmds, function(i, cmd) {
@@ -131,5 +132,8 @@ $(document).ready(function() {
 
   $.getScript("commands/builtins.jsonp");
   $.getScript("commands/juju.jsonp");
+  $.getJSON('lessons/lessons.json', function(data) {
+    window.lessons = data.lessons;
+  });
   $.getScript("lessons/01-set-up-juju.jsonp");
 });
