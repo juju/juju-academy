@@ -42,8 +42,5 @@ load_commands([
       .modal('show')
       .children('.contents textarea')
       .val(window.file.load(f));
-  },
-  function(cmd, term, next) {
-    term.echo(cmd + ": command not found");
   }
 ]);

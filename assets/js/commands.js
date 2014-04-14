@@ -52,6 +52,9 @@ Commands.prototype._exec = function(cmd, term, key) {
     key++;
     if(key < self._cfg.commands.length) {
       return self._exec(cmd, term, key);
+    } else {
+      var ex = cmd.split(' ')[0];
+      term.error(ex + ": command not found");
     }
   });
 };
