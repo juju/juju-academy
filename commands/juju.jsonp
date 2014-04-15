@@ -30,18 +30,28 @@ load_commands([
     term.echo("juju help openstack-provider   use on OpenStack");
   },
   function(cmd, term, next) {
-    if(!cmd.match('^juju switch$')) {
+    var s = cmd.match('^juju switch$');
+    var se = cmd.match('^juju switch (.*)');
+
+    if(!s && !se) {
       return next();
     }
-    term.echo('amazon');
-  },
-  function(cmd, term, next) {
-    m = cmd.match('^juju switch (.*)');
-    if(!m) {
-      return next();
+
+    if(!window.file.exists('~/.juju/environments.yaml')) {
+      return term.error("ERROR couldn't read the environment");
     }
-    env = m[1]
-    term.echo('amazon -> ' + env);
+
+    var cur_env = window.file.load('~/.juju/current-environment');
+    if(!cur_env) {
+      cur_env = 'amazon';
+    }
+
+    if(se) {
+      window.file.save('~/.juju/current-environment', se[1]);
+      return term.echo("{0} -> {1}".format(cur_env, se[1]));
+    }
+
+    term.echo(cur_env);
   },
   function(cmd, term, next) {
     if(!cmd.match("^juju (init|generate)$")) {
