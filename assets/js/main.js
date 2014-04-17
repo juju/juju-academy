@@ -6,7 +6,7 @@ Last login: " + new Date().toString();
 
 window.commands = new Commands();
 window.file = new Files();
-window.lessons = [];
+window.lessons = {};
 
 function load_commands(cmds) {
   $.each(cmds, function(i, cmd) {
@@ -36,7 +36,8 @@ function load_lesson(l) {
   }
 
   $('.sidebar .lesson.description').html('<p>' + l.description + '</p>');
-  var task_line = $('.sidebar .tasks.list a').detach();
+  var task_line = $('<a class="item"><i class="green circle ok icon"></i><div class="content"><div class="sub"></div></div></a>');
+  $('.sidebar .tasks.list').empty();
 
   // TODO: Holy fucking shit refactor this
   $.each(l.tasks, function(k, v) {
@@ -107,13 +108,9 @@ function load_lesson(l) {
 }
 
 $(document).ready(function() {
-  //$('.filter.menu .item').tab();
-
   $('.ui.rating').rating({
     clearable: true
   });
-
-  // $('.ui.sidebar').sidebar('attach events', '.launch.button');
 
   $('.ui.dropdown').dropdown();
 
@@ -133,7 +130,18 @@ $(document).ready(function() {
   $.getScript("commands/builtins.jsonp");
   $.getScript("commands/juju.jsonp");
   $.getJSON('lessons/lessons.json', function(data) {
-    window.lessons = data.lessons;
+    data.lessons.forEach(function(l) {
+      // TODO: make this less ugly
+      var lesson = l.split('/')[1].split('.')[0];
+      window.lessons[lesson] = l;
+    });
   });
-  $.getScript("lessons/01-set-up-juju.jsonp");
+
+  $.address.change(function(e) {
+    var lesson = e.value;
+    if(!$.inArray(window.lessons, lesson)) {
+      lesson = "00-what-is-juju";
+    }
+    $.getScript("lessons/" + lesson + ".jsonp");
+  });
 });
