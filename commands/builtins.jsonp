@@ -22,7 +22,7 @@ load_commands([
       })
       .modal('show')
       .children('.contents textarea')
-      .val(window.file.load(f));
+      .val(window.file.open(f));
   },
   function(cmd, term, next) {
     if(!cmd.match('^cd (.*)$') && !cmd.match('^cd$')) {

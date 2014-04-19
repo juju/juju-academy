@@ -41,7 +41,7 @@ load_commands([
       return term.error("ERROR couldn't read the environment");
     }
 
-    var cur_env = window.file.load('~/.juju/current-environment');
+    var cur_env = window.file.open('~/.juju/current-environment');
     if(!cur_env) {
       cur_env = 'amazon';
     }

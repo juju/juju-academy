@@ -23,6 +23,8 @@
     "jquery": "~2.1.0",
     "semantic-ui": "~0.15.5",
     "jquery.terminal": "~0.8.7",
-    "jquery-address": "*"
+    "jquery-address": "*",
+    "jQuery-Storage-API": "~1.7.1",
+    "jquery-cookie": "~1.4.0"
   }
 }
