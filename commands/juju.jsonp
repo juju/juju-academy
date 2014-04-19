@@ -63,5 +63,13 @@ load_commands([
 
     window.file.save("~/.juju/environments.yaml", "default: hey\n  amazon:\n    key: val\n  academy:\n    user: test\n    value: demo");
     term.echo("A boilerplate environment configuration file has been written to ~/.juju/environments.yaml.\nEdit the file to configure your juju environment and run bootstrap.");
+  },
+  function(cmd, term, next) {
+    if(!cmd.match("^juju .*$")) {
+      return next();
+    }
+
+    var action = cmd.split(' ')[1];
+    term.error("Sorry, {0} hasn't been implemented yet or action doesn't exist".format(action));
   }
 ]);
