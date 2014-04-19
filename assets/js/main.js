@@ -7,6 +7,7 @@ Last login: " + new Date().toString();
 window.commands = new Commands();
 window.file = new Files();
 window.lessons = {};
+window.lesson = null;
 
 function load_commands(cmds) {
   $.each(cmds, function(i, cmd) {
@@ -24,9 +25,43 @@ function ready_set_next() {
 
   $('.sidebar .tasks .item').promise().done(function() {
     if(ready) {
-      $('.sidebar .button.next').removeClass('disabled');
+      $('.sidebar .button.next')
+        .removeClass('disabled')
+        .data('lesson', next_lesson(window.lesson))
+        .click(function() {
+          if(!$(this).hasClass('disabled')) {
+            window.terminal.clear();
+            $('.sidebar .lesson.description').show();
+            $('.sidebar h1 i').removeClass('green');
+            $.address.value($(this).data('lesson'));
+          }
+        });
+    } else {
+      $('.sidebar .button.next')
+        .addClass('disabled')
+        .data('lesson', '');
     }
   });
+}
+
+function next_lesson(l) {
+  var keys = Object.keys(window.lessons).sort();
+  var loc = keys.indexOf(l);
+  var next = keys[loc+1];
+
+  if(next) {
+    return next;
+  }
+}
+
+function previous_lesson(l) {
+  var keys = Object.keys(window.lessons).sort();
+  var loc = keys.indexOf(l);
+  var next = keys[loc-1];
+
+  if(next) {
+    return next;
+  }
 }
 
 function load_lesson(l) {
@@ -96,6 +131,7 @@ function load_lesson(l) {
       });
     };
     window.commands.add(runner, true);
+    ready_set_next();
   });
 
   $('.tasks.list a.item').click(function() {
@@ -108,18 +144,14 @@ function load_lesson(l) {
 }
 
 $(document).ready(function() {
-  $('.ui.rating').rating({
-    clearable: true
-  });
-
   $('.ui.dropdown').dropdown();
-
   $('.sidebar h1').click(function(e) {
     $('.sidebar .lesson.description').slideToggle();
     $('.sidebar h1 i').toggleClass('green');
   });
 
   $('#term').terminal(function(cmd, term) {
+    window.terminal = term;
     window.commands.run(cmd, term);
   }, {
     prompt: 'demo@ubuntu:~$ ',
@@ -129,7 +161,7 @@ $(document).ready(function() {
 
   $.getScript("commands/builtins.jsonp");
   $.getScript("commands/juju.jsonp");
-  $.getJSON('lessons/lessons.json', function(data) {
+  $.getJSON('lessons.json', function(data) {
     data.lessons.forEach(function(l) {
       // TODO: make this less ugly
       var lesson = l.split('/')[1].split('.')[0];
@@ -139,9 +171,11 @@ $(document).ready(function() {
 
   $.address.change(function(e) {
     var lesson = e.value;
-    if(!$.inArray(window.lessons, lesson)) {
+    if(lesson == '/' || !$.inArray(window.lessons, lesson.replace('/', ''))) {
+      $.address.value('00-what-is-juju');
       lesson = "00-what-is-juju";
     }
     $.getScript("lessons/" + lesson + ".jsonp");
+    window.lesson = lesson.replace('/', '');
   });
 });
