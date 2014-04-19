@@ -11,6 +11,7 @@ load_commands([
       return next();
     }
     f = m[1]
+
     $('.editor')
       .modal('setting', {
         onDeny: function(){
@@ -21,8 +22,23 @@ load_commands([
         }
       })
       .modal('show')
-      .children('.contents textarea')
+      .find('.content textarea')
       .val(window.file.open(f));
+  },
+  function(cmd, term, next) {
+    m = cmd.match('^cat (.*)');
+    if(!m && !cmd.match('^cat$')) {
+      return next();
+    }
+    var f = m[1]
+    if(!f) {
+      return term.error('You need to specify a file!');
+    }
+
+    var lines = window.file.open(f).split('\n');
+    $.each(lines, function(i, l) {
+      term.echo(l);
+    });
   },
   function(cmd, term, next) {
     if(!cmd.match('^cd (.*)$') && !cmd.match('^cd$')) {
