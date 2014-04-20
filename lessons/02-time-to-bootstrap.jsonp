@@ -2,7 +2,8 @@ load_lesson({
   "name": "Your first bootstrap",
   "description": [
     "Juju uses a state server, called the bootstrap node, to manage and orchestrate your deployment. Each environment needs a bootstrap node in order manage and perform tasks. The bootstrap node acts as your point of communication to the deployed environment.",
-    "All commands you run are asyncronously sent to the bootstrap node, which then queues and pushes these events to the appropriate servers. This is how Juju manages it's orchestration."
+    "All commands you run are asyncronously sent to the bootstrap node, which then queues and pushes these events to the appropriate servers. This is how Juju manages it's orchestration.",
+    "Once you've bootstrapped an environment, you'll want to know it's current state. Juju provides a command, the <code>status</code> command, to show an overview of the selected environment at any one point in time. <code>juju status</code> is your window in to a deployed environment."
   ],
   "tasks": {
     "00-bootstrap-help": {
@@ -14,6 +15,11 @@ load_lesson({
       "name": "Perform a bootstrap against the academy environment",
       "validate": "^juju bootstrap($| -e academy$)",
       "hint": "Use the <code>edit</code> command to open <code>~/.juju/environments.yaml</code>"
+    },
+    "02-verify-your-environment": {
+      "name": "Review your newly bootstrapped environment",
+      "validate": "^juju status($| -e academy$)",
+      "hint": "<code>juju status</code> provides the state of the bootstrapped environment"
     }
   }
 });
