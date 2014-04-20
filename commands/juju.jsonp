@@ -1,5 +1,143 @@
 load_commands([
   function(cmd, term, next) {
+    // JUJU SWITCH
+    // juju switch|juju switch <env>
+    var s = cmd.match('^juju switch$');
+    var se = cmd.match('^juju switch (.*)');
+
+    if(!s && !se) {
+      return next();
+    }
+
+    if(!window.file.exists('~/.juju/environments.yaml')) {
+      return term.error("ERROR couldn't read the environment");
+    }
+
+    var cur_env = window.file.open('~/.juju/current-environment');
+    if(!cur_env) {
+      cur_env = 'amazon';
+    }
+
+    if(se) {
+      window.file.save('~/.juju/current-environment', se[1]);
+      return term.echo("{0} -> {1}".format(cur_env, se[1]));
+    }
+
+    term.echo(cur_env);
+  },
+  function(cmd, term, next) {
+    // JUJU STATUS
+    // juju status|juju status -e <env>
+    var m = cmd.match('^juju status(?:$| -e ([a-zA-Z0-9]+))');
+    if(!m) {
+      return next();
+    }
+    var environment = null,
+        storage = $.localStorage;
+    if(m[1]) {
+      environment = m[1];
+    } else if(window.file.exists('~/.juju/current-environment')) {
+      environment = window.file.open('~/.juju/current-environment');
+    }
+
+    if(!environment) {
+      term.error('error: open ~/.juju/environments.yaml: no such file or directory');
+    }
+
+    if(!storage.isSet(environment)) {
+      term.error('ERROR Unable to connect to environment {0}'.format(environment));
+      term.error();
+      term.error("Please check your credentials or use 'juju bootstrap' to create a new environment.");
+      return
+    }
+
+    var s = storage.get(environment);
+    return term.echo(jsyaml.dump(s));
+  },
+  function(cmd, term, next) {
+    // JUJU BOOTSTRAP
+    // juju bootstrap|juju bootstrap -e <env>
+    var m = cmd.match('^juju bootstrap(?:$| -e ([a-zA-Z0-9]+))');
+    if(!m) {
+      return next();
+    }
+    var environment = null,
+        storage = $.localStorage;
+    if(m[1]) {
+      environment = m[1];
+    } else if(window.file.exists('~/.juju/current-environment')) {
+      environment = window.file.open('~/.juju/current-environment');
+    }
+
+    if(!environment) {
+      term.error('error: open ~/.juju/environments.yaml: no such file or directory');
+    }
+
+    if(storage.isSet(environment)) {
+      return term.error('ERROR {0} is already bootstrapped'.format(environment));
+    }
+
+    var instance = (new Date).getTime();
+    var boot = {
+      'machines': {
+        '0': {
+          'agent-state': 'started',
+          'agent-version': '1.18.1',
+          'dns-name': '{0}.localhoast.com'.format(instance),
+          'hardware': 'arch=demo cpu-cores=1 cpu-power=∞ mem=1024M root-disk=8192M',
+          'instance-id': instance,
+          'instance-state': 'running',
+          'series': 'trusty'
+        }
+      },
+      'services': {}
+    };
+    term.pause();
+    term.echo('Launching instance');
+    term.echo(' - {0}.localhoast.com'.format(instance));
+    term.echo('Waiting for address');
+    setTimeout(function() {
+      term.echo('Attempting to connect to :22');
+    }, 500);
+    setTimeout(function() {
+      term.echo('Running apt-get update');
+      term.echo('Running apt-get upgrade');
+    }, 1000);
+    setTimeout(function() {
+      term.echo('Bootstrapping Juju machine agent');
+    }, 1800);
+    setTimeout(function() {
+      term.echo('Starting Juju machine agent (jujud-machine-0)');
+      term.resume();
+    }, 2100);
+
+    return storage.set(environment, boot);
+  },
+  function(cmd, term, next) {
+    // JUJU INIT
+    // juju init|juju generate
+    if(!cmd.match("^juju (init|generate)$")) {
+      return next();
+    }
+    if(window.file.exists('~/.juju/environments.yaml')) {
+      return term.echo("ERROR A juju environment configuration already exists.");
+    }
+
+    window.file.save("~/.juju/environments.yaml", "default: hey\n  amazon:\n    key: val\n  academy:\n    user: test\n    value: demo");
+    term.echo("A boilerplate environment configuration file has been written to ~/.juju/environments.yaml.\nEdit the file to configure your juju environment and run bootstrap.");
+  },
+  function(cmd, term, next) {
+    // JUJU ?
+    if(!cmd.match("^juju .*$")) {
+      return next();
+    }
+
+    var action = cmd.split(' ')[1];
+    term.error("Sorry, {0} hasn't been implemented yet or action doesn't exist".format(action));
+  },
+  function(cmd, term, next) {
+    // JUJU
+    // juju
     if(!cmd.match('^juju$')) {
       return next();
     }
@@ -28,48 +166,5 @@ load_commands([
     term.echo("juju help hpcloud-provider     use on HP Cloud");
     term.echo("juju help local-provider       use on this computer");
     term.echo("juju help openstack-provider   use on OpenStack");
-  },
-  function(cmd, term, next) {
-    var s = cmd.match('^juju switch$');
-    var se = cmd.match('^juju switch (.*)');
-
-    if(!s && !se) {
-      return next();
-    }
-
-    if(!window.file.exists('~/.juju/environments.yaml')) {
-      return term.error("ERROR couldn't read the environment");
-    }
-
-    var cur_env = window.file.open('~/.juju/current-environment');
-    if(!cur_env) {
-      cur_env = 'amazon';
-    }
-
-    if(se) {
-      window.file.save('~/.juju/current-environment', se[1]);
-      return term.echo("{0} -> {1}".format(cur_env, se[1]));
-    }
-
-    term.echo(cur_env);
-  },
-  function(cmd, term, next) {
-    if(!cmd.match("^juju (init|generate)$")) {
-      return next();
-    }
-    if(window.file.exists('~/.juju/environments.yaml')) {
-      return term.echo("ERROR A juju environment configuration already exists.");
-    }
-
-    window.file.save("~/.juju/environments.yaml", "default: hey\n  amazon:\n    key: val\n  academy:\n    user: test\n    value: demo");
-    term.echo("A boilerplate environment configuration file has been written to ~/.juju/environments.yaml.\nEdit the file to configure your juju environment and run bootstrap.");
-  },
-  function(cmd, term, next) {
-    if(!cmd.match("^juju .*$")) {
-      return next();
-    }
-
-    var action = cmd.split(' ')[1];
-    term.error("Sorry, {0} hasn't been implemented yet or action doesn't exist".format(action));
   }
 ]);
