@@ -41,7 +41,7 @@ load_commands([
     }
 
     if(!environment) {
-      term.error('error: open ~/.juju/environments.yaml: no such file or directory');
+      return term.error('error: open ~/.juju/environments.yaml: no such file or directory');
     }
 
     if(!storage.isSet(environment)) {
