@@ -43,6 +43,10 @@ Commands.prototype._exec = function(cmd, term, key) {
     if(key < self._cfg.commands.length) {
       return self._exec(cmd, term, key);
     } else {
+      if(!cmd) {
+        return;
+      }
+
       var ex = cmd.split(' ')[0];
       term.error(ex + ": command not found");
     }
