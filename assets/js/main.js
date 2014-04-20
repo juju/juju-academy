@@ -159,6 +159,12 @@ $(document).ready(function() {
     completion: true
   });
 
+  window.editor = ace.edit("editor");
+  window.editor.setFontSize(18);
+  window.editor.getSession().setUseSoftTabs(true);
+  window.editor.getSession().setUseWrapMode(true);
+  window.editor.setHighlightActiveLine(true);
+
   $.getScript("commands/builtins.jsonp");
   $.getScript("commands/juju.jsonp");
   $.getJSON('lessons.json', function(data) {

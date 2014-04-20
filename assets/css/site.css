@@ -104,6 +104,12 @@ div.terminal-output {
   background-color: #FAFAFA;
 }
 
+#editor {
+  position: relative;
+  width: 100%;
+  height: 400px;
+}
+
 /*******************************
   Responsive
 *******************************/

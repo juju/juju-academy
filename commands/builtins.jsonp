@@ -11,19 +11,26 @@ load_commands([
       return next();
     }
     f = m[1]
+    term.pause();
 
     $('.editor')
       .modal('setting', {
+        closable: false,
         onDeny: function(){
           term.echo('File not edited');
         },
         onApprove: function() {
-          window.file.save(f, this.find('.contents textarea').val());
+          window.file.save(f, window.editor.getSession().toString());
+        },
+        onHidden: function() {
+          term.resume();
         }
       })
-      .modal('show')
-      .find('.content textarea')
-      .val(window.file.open(f));
+      .modal('show');
+
+    window.editor.setValue(window.file.open(f));
+    window.editor.getSession().setMode("ace/mode/yaml");
+    window.editor.gotoLine(0);
   },
   function(cmd, term, next) {
     m = cmd.match('^cat (.*)');
