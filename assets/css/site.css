@@ -32,6 +32,10 @@ orange {
   color: #dd4814;
 }
 
+div.terminal {
+  padding: 0;
+}
+
 div.terminal,
 div.terminal-output,
 div.terminal-output div,
@@ -54,6 +58,14 @@ div.terminal > .cmd .cursor.blink {
 
 div.terminal-output {
   overflow-y: auto;
+}
+
+#term {
+  overflow-y: scroll;
+}
+
+#classroom .ui.grid .middle.column {
+  padding: 0;
 }
 
 .ui.header .icon+.content {

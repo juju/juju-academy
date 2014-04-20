@@ -76,6 +76,10 @@ $(document).ready(function() {
     });
   });
 
+  $(window).resize(function() {
+    $('#term').height($(window).height());
+  });
+  $(window).trigger('resize');
   $.address.change(function(e) {
     var lesson = e.value;
     if(lesson == '/' || !$.inArray(window.lessons, lesson.replace('/', ''))) {
