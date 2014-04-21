@@ -147,7 +147,7 @@ load_commands([
     term.pause();
     $.ajax(help_url, {
       'success': function(data) {
-        $.each(data.split('\n'), function(i, l) {
+        $.each(data.trim().split('\n'), function(i, l) {
           term.echo(l);
         });
       },
