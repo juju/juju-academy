@@ -1,0 +1,8 @@
+usage: juju destroy-unit [options] <unit> [...]
+purpose: destroy service units
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in
+
+aliases: remove-unit

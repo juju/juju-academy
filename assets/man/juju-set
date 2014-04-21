@@ -1,0 +1,10 @@
+usage: juju set [options] <service> name=value ...
+purpose: set service config options
+
+options:
+--config  (= )
+    path to yaml-formatted service config
+-e, --environment (= "joyent")
+    juju environment to operate in
+
+Set one or more configuration options for the specified service.

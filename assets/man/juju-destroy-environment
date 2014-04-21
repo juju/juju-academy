@@ -1,0 +1,10 @@
+usage: juju destroy-environment [options] <environment name>
+purpose: terminate all machines and other associated resources for an environment
+
+options:
+-e, --environment (= "")
+    juju environment to operate in
+--force  (= false)
+    Forcefully destroy the environment, directly through the environment provider
+-y, --yes  (= false)
+    Do not ask for confirmation

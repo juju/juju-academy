@@ -1,0 +1,10 @@
+usage: juju destroy-service [options] <service>
+purpose: destroy a service
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in
+
+Destroying a service will destroy all its units and relations.
+
+aliases: remove-service

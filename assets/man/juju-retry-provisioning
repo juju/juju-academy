@@ -1,0 +1,6 @@
+usage: juju retry-provisioning [options] <machine> [...]
+purpose: retries provisioning for failed machines
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in

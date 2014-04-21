@@ -1,0 +1,12 @@
+usage: juju debug-hooks [options] <unit name> [hook names]
+purpose: launch a tmux session to debug a hook
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in
+--proxy  (= true)
+    proxy through the API server
+--pty  (= true)
+    enable pseudo-tty allocation
+
+Interactively debug a hook remotely on a service unit.

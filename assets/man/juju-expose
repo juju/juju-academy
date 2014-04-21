@@ -1,0 +1,6 @@
+usage: juju expose [options] <service>
+purpose: expose a service
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in

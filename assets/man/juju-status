@@ -1,0 +1,24 @@
+usage: juju status [options] [pattern ...]
+purpose: output status information about an environment
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in
+--format  (= yaml)
+    specify output format (json|yaml)
+-o, --output (= "")
+    specify an output file
+
+This command will report on the runtime state of various system entities.
+
+Service or unit names may be specified to filter the status to only those
+services and units that match, along with the related machines, services
+and units. If a subordinate unit is matched, then its principal unit will
+be displayed. If a principal unit is matched, then all of its subordinates
+will be displayed.
+
+Wildcards ('*') may be specified in service/unit names to match any sequence
+of characters. For example, 'nova-*' will match any service whose name begins
+with 'nova-': 'nova-compute', 'nova-volume', etc.
+
+aliases: stat

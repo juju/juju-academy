@@ -1,0 +1,22 @@
+usage: juju get-environment [options] [<environment key>]
+purpose: view environment values
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in
+--format  (= smart)
+    specify output format (json|smart|yaml)
+-o, --output (= "")
+    specify an output file
+
+If no extra args passed on the command line, all configuration keys and values
+for the environment are output using the selected formatter.
+
+A single environment value can be output by adding the environment key name to
+the end of the command line.
+
+Example:
+  
+  juju get-environment default-series  (returns the default series for the environment)
+
+aliases: get-env

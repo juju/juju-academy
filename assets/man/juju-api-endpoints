@@ -1,0 +1,18 @@
+usage: juju api-endpoints [options]
+purpose: Print the API server addresses
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in
+--format  (= smart)
+    specify output format (json|smart|yaml)
+-o, --output (= "")
+    specify an output file
+
+Returns a list of the API servers formatted as host:port
+Default output format returns an api server per line.
+
+Examples:
+  $ juju api-endpoints
+  10.0.3.1:17070
+  $

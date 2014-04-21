@@ -127,6 +127,34 @@ load_commands([
     term.echo("A boilerplate environment configuration file has been written to ~/.juju/environments.yaml.\nEdit the file to configure your juju environment and run bootstrap.");
   },
   function(cmd, term, next) {
+    // juju
+    // juju help
+    // juju help <topic>
+    var help_match = cmd.match('^juju help(?:$| ([a-z]+)$)');
+    if(!cmd.match('^juju$') && !help_match) {
+      return next();
+    }
+
+    var help_url = 'assets/man/juju';
+    if(help_match && help_match[1]) {
+      help_url = help_url + '-' + help_match[1];
+    }
+
+    term.pause();
+    $.ajax(help_url, {
+      'success': function(data) {
+        $.each(data.split('\n'), function(i, l) {
+          term.echo(l);
+        });
+      },
+      'error': function() {
+        term.error('ERROR unknown command or topic for {0}'.format(help_match[1]));
+      }
+    }).done(function() {
+      term.resume();
+    });
+  },
+  function(cmd, term, next) {
     // JUJU ?
     if(!cmd.match("^juju .*$")) {
       return next();
@@ -134,37 +162,5 @@ load_commands([
 
     var action = cmd.split(' ')[1];
     term.error("Sorry, {0} hasn't been implemented yet or action doesn't exist".format(action));
-  },
-  function(cmd, term, next) {
-    // JUJU
-    // juju
-    if(!cmd.match('^juju$')) {
-      return next();
-    }
-
-    term.echo("Juju -- devops distilled https://juju.ubuntu.com");
-    term.echo("");
-    term.echo("Juju provides easy, intelligent service orchestration on top of environments");
-    term.echo("such as Amazon EC2, HP Cloud, OpenStack, MaaS, or your own local machine.");
-    term.echo("");
-    term.echo("Basic commands:");
-    term.echo("juju init             generate boilerplate configuration for juju environments");
-    term.echo("juju bootstrap        start up an environment from scratch");
-    term.echo("");
-    term.echo("juju deploy           deploy a new service");
-    term.echo("juju add-relation     add a relation between two services");
-    term.echo("juju expose           expose a service");
-    term.echo("");
-    term.echo("juju help bootstrap   more help on e.g. bootstrap command");
-    term.echo("juju help commands    list all commands");
-    term.echo("juju help glossary    glossary of terms");
-    term.echo("juju help topics      list all help topics");
-    term.echo("");
-    term.echo("Provider information:");
-    term.echo("juju help azure-provider       use on Windows Azure");
-    term.echo("juju help ec2-provider         use on Amazon EC2");
-    term.echo("juju help hpcloud-provider     use on HP Cloud");
-    term.echo("juju help local-provider       use on this computer");
-    term.echo("juju help openstack-provider   use on OpenStack");
   }
 ]);

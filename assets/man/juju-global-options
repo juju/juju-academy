@@ -1,0 +1,21 @@
+Global Options
+
+These options may be used with any command, and may appear in front of any
+command.
+
+--debug  (= false)
+    equivalent to --show-log --log-config=<root>=DEBUG
+--description  (= false)
+    
+-h, --help  (= false)
+    show help on a command or other topic
+--log-file (= "")
+    path to write log to
+--logging-config (= "")
+    specify log levels for modules
+-q, --quiet  (= false)
+    show no informational output
+--show-log  (= false)
+    if set, write the log file to stderr
+-v, --verbose  (= false)
+    show more verbose output

@@ -1,0 +1,2 @@
+usage: juju help-tool [tool]
+purpose: show help on a juju charm tool

@@ -1,0 +1,6 @@
+usage: juju unexpose [options] <service>
+purpose: unexpose a service
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in

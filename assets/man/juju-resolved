@@ -1,0 +1,8 @@
+usage: juju resolved [options] <unit>
+purpose: marks unit errors resolved
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in
+-r, --retry  (= false)
+    re-execute failed hooks

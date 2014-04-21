@@ -1,0 +1,18 @@
+usage: juju authorised-keys [options] <command> ...
+purpose: manage authorised ssh keys
+
+options:
+--description  (= false)
+    
+-h, --help  (= false)
+    show help on a command or other topic
+
+"juju authorized-keys" is used to manage the ssh keys allowed to log on to
+nodes in the Juju environment.
+
+commands:
+    add    - add new authorized ssh keys for a Juju user
+    delete - delete authorized ssh keys for a Juju user
+    help   - show help on a command or other topic
+    import - using ssh-import-id, import new authorized ssh keys for a Juju user
+    list   - list authorised ssh keys for a specified user

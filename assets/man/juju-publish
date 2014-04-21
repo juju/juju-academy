@@ -1,0 +1,22 @@
+usage: juju publish [options] [<charm url>]
+purpose: publish charm to the store
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in
+--from (= ".")
+    path for charm to be published
+
+<charm url> can be a charm URL, or an unambiguously condensed form of it;
+the following forms are accepted:
+
+For cs:precise/mysql
+  cs:precise/mysql
+  precise/mysql
+
+For cs:~user/precise/mysql
+  cs:~user/precise/mysql
+
+There is no default series, so one must be provided explicitly when
+informing a charm URL. If the URL isn't provided, an attempt will be
+made to infer it from the current branch push URL.

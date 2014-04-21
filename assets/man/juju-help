@@ -1,0 +1,4 @@
+usage: juju help [topic]
+purpose: show help on a command or other topic
+
+See also: topics

@@ -1,0 +1,25 @@
+usage: juju debug-log [options]
+purpose: display the consolidated log file
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in
+--exclude-module  (= )
+    do not show log messages for these logging modules
+-i, --include  (= )
+    only show log messages for these entities
+--include-module  (= )
+    only show log messages for these logging modules
+-l, --level (= "")
+    log level to show, one of [TRACE, DEBUG, INFO, WARNING, ERROR]
+--limit  (= 0)
+    show at most this many lines
+-n, --lines  (= 10)
+    go back this many lines from the end before starting to filter
+--replay  (= false)
+    start filtering from the start
+-x, --exclude  (= )
+    only show log messages for these entities
+
+Stream the consolidated debug log file. This file contains the log messages
+from all nodes in the environment.

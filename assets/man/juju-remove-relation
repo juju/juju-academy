@@ -1,0 +1,8 @@
+usage: juju destroy-relation [options] <service1>[:<relation name1>] <service2>[:<relation name2>]
+purpose: destroy a relation between two services
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in
+
+aliases: remove-relation

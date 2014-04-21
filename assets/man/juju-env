@@ -1,0 +1,17 @@
+usage: juju switch [options] [environment name]
+purpose: show or change the default juju environment name
+
+options:
+-l, --list  (= false)
+    list the environment names
+
+Show or change the default juju environment name.
+
+If no command line parameters are passed, switch will output the current
+environment as defined by the file $JUJU_HOME/current-environment.
+
+If a command line parameter is passed in, that value will is stored in the
+current environment file if it represents a valid environment name as
+specified in the environments.yaml file.
+
+aliases: env

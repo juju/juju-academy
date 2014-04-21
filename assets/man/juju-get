@@ -1,0 +1,10 @@
+usage: juju get [options] <service>
+purpose: get service configuration options
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in
+--format  (= yaml)
+    specify output format (yaml)
+-o, --output (= "")
+    specify an output file

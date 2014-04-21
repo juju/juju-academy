@@ -1,0 +1,18 @@
+usage: juju get-constraints [options] [<service>]
+purpose: view constraints on the environment or a service
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in
+--format  (= constraints)
+    specify output format (constraints|json|yaml)
+-o, --output (= "")
+    specify an output file
+
+get-constraints returns a list of constraints that have been set on
+the environment using juju set-constraints.  You can also view constraints set
+for a specific service by using juju get-constraints <service>.
+
+See Also:
+   juju help constraints
+   juju help set-constraints

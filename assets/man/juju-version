@@ -1,0 +1,8 @@
+usage: juju version [options]
+purpose: print the current version
+
+options:
+--format  (= smart)
+    specify output format (json|smart|yaml)
+-o, --output (= "")
+    specify an output file

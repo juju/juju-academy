@@ -1,0 +1,45 @@
+usage: juju run [options] <commands>
+purpose: run the commands on the remote targets specified
+
+options:
+--all  (= false)
+    run the commands on all the machines
+-e, --environment (= "joyent")
+    juju environment to operate in
+--format  (= smart)
+    specify output format (json|smart|yaml)
+--machine  (= )
+    one or more machine ids
+-o, --output (= "")
+    specify an output file
+--service  (= )
+    one or more service names
+--timeout  (= 5m0s)
+    how long to wait before the remote command is considered to have failed
+--unit  (= )
+    one or more unit ids
+
+Run the commands on the specified targets.
+
+Targets are specified using either machine ids, service names or unit
+names.  At least one target specifier is needed.
+
+Multiple values can be set for --machine, --service, and --unit by using
+comma separated values.
+
+If the target is a machine, the command is run as the "ubuntu" user on
+the remote machine.
+
+If the target is a service, the command is run on all units for that
+service. For example, if there was a service "mysql" and that service
+had two units, "mysql/0" and "mysql/1", then
+  --service mysql
+is equivalent to
+  --unit mysql/0,mysql/1
+
+Commands run for services or units are executed in a 'hook context' for
+the unit.
+
+--all is provided as a simple way to run the command on all the machines
+in the environment.  If you specify --all you cannot provide additional
+targets.

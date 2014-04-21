@@ -1,0 +1,11 @@
+usage: juju set-environment [options] key=[value] ...
+purpose: replace environment values
+
+options:
+-e, --environment (= "joyent")
+    juju environment to operate in
+
+Updates the environment of a running Juju instance.  Multiple key/value pairs
+can be passed on as command line arguments.
+
+aliases: set-env

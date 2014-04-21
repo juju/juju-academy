@@ -1,0 +1,10 @@
+usage: juju init [options]
+purpose: generate boilerplate configuration for juju environments
+
+options:
+-f  (= false)
+    force overwriting environments.yaml file even if it exists (ignored if --show flag specified)
+--show  (= false)
+    print the generated configuration data to stdout instead of writing it to a file
+
+aliases: generate-config
