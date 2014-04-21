@@ -92,4 +92,34 @@ load_commands([
     }
     return term.error('Just a demo, there is no need to be upset');
   },
+  function(cmd, term, next) {
+    if(!cmd.match('^reset$')) {
+      return next();
+    }
+
+    term.pause();
+    $('.basic.confirm.modal')
+      .modal('setting', {
+        closable: false,
+        onApprove: function() {
+          var storage = $.localStorage;
+          storage.removeAll();
+        },
+        onHidden: function() {
+          term.resume();
+        }
+      })
+      .modal('show')
+      .find('.content .right p')
+        .text('This will clear all environments, files, and history. Doing so will reset all progress. Are you sure you wish to continue?')
+    ;
+    return
+  },
+  function(cmd, term, next) {
+    if(!cmd.match('^uptime$')) {
+      return next();
+    }
+    var ls = Object.keys(window.lessons).sort();
+    term.echo(" {0}, 1 users, lesson {1} of {2}".format((new Date()).toTimeString(), ls.indexOf(window.lesson) + 1, ls.length));
+  }
 ]);
