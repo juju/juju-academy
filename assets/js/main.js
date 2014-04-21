@@ -80,6 +80,7 @@ $(document).ready(function() {
   $(window).resize(function() {
     $('.scrollable').height($(window).height() - 10);
   });
+
   $(window).trigger('resize');
   $.address.change(function(e) {
     var lesson = e.value;
