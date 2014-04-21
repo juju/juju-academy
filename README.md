@@ -20,17 +20,17 @@ Then install all the bower things
 Lessons are jsonp files stored in the lessons directory. The format is relatively light weight and only requires a few keys wrapped in a `load_lesson` call.
 
  - `name` - The title of the lesson
-    ```
-    'name': 'Title of lesson',
-    ```
+      ```
+      'name': 'Title of lesson',
+      ```
  - `description` - An array/list of paragraphs which discuss the lesson
-    ```
-    'description': [
-      'First paragraph',
-      'second paragraph',
-      'last paragraph'
-    ]
-    ```
+      ```
+      'description': [
+        'First paragraph',
+        'second paragraph',
+        'last paragraph'
+      ]
+      ```
  - `tasks` - This is an object which each key being a unique identifier for the task
 
 ## Creating tasks
