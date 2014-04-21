@@ -77,7 +77,7 @@ $(document).ready(function() {
   });
 
   $(window).resize(function() {
-    $('#term').height($(window).height());
+    $('.scrollable').height($(window).height() - 10);
   });
   $(window).trigger('resize');
   $.address.change(function(e) {

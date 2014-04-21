@@ -6,6 +6,7 @@ html,
 body {
   font-size: 15px;
   height: 100%;
+  overflow: hidden;
 }
 
 body {
@@ -33,7 +34,7 @@ orange {
 }
 
 div.terminal {
-  padding: 0;
+  padding: 0 5px 0;
 }
 
 div.terminal,
@@ -60,12 +61,22 @@ div.terminal-output {
   overflow-y: auto;
 }
 
+.scrollable {
+  overflow-y: auto;
+}
+
 #term {
   overflow-y: scroll;
 }
 
-#classroom .ui.grid .middle.column {
+#classroom .ui.grid .column {
   padding: 0;
+}
+
+#classroom .ui.grid .column .scrollable {
+  padding-top: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .ui.header .icon+.content {
