@@ -1,9 +1,9 @@
-var greet = "Welcome to Juju Academy (juju-academy 0.0.1 web)\n\n\
+var greet = "Welcome to Juju Academy ({0} {1} web)\n\n\
 \
  * Documentation:  https://help.juju.academy\n\
  * Juju Documentation: https://juju.ubuntu.com/docs\n\n\
 \
-Last login: " + new Date().toString();
+Last login: {2}";
 
 window.commands = new Commands();
 window.file = new Files();
@@ -52,13 +52,18 @@ $(document).ready(function() {
     $('.sidebar h1 i').toggleClass('green');
   });
 
-  $('#term').terminal(function(cmd, term) {
-    window.terminal = term;
-    window.commands.run(cmd, term);
-  }, {
-    prompt: 'demo@ubuntu:~$ ',
-    greetings: greet,
-    completion: true
+  $.getJSON('bower.json', function(data) {
+    $('#term').terminal(function(cmd, term) {
+      window.terminal = term;
+      window.commands.run(cmd, term);
+    }, {
+      prompt: 'demo@ubuntu:~$ ',
+      greetings: greet.format(data.name, data.version, (new Date()).toString()),
+      tabcompletion: true,
+      completion: function(term, cmd, cb) {
+        cb([]);
+      }
+    });
   });
 
   window.editor = ace.edit("editor");
