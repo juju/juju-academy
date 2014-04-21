@@ -1,6 +1,7 @@
 var greet = "Welcome to Juju Academy (juju-academy 0.0.1 web)\n\n\
 \
- * Documentation:  https://help.juju.academy\n\n\
+ * Documentation:  https://help.juju.academy\n\
+ * Juju Documentation: https://juju.ubuntu.com/docs\n\n\
 \
 Last login: " + new Date().toString();
 
