@@ -126,6 +126,89 @@ load_commands([
     term.echo("A boilerplate environment configuration file has been written to ~/.juju/environments.yaml.\nEdit the file to configure your juju environment and run bootstrap.");
   },
   function(cmd, term, next) {
+    // JUJU DEPLOY
+    // juju deploy <charm>
+    // juju deploy -e <env> <charm>
+    // juju deploy --to <m> <charm>
+    // juju deploy -n|--num-units <#> <charm>
+    if(!cmd.match('^juju deploy (.*)')) {
+      return next();
+    }
+
+    var options = {'to': null, 'num-units': 1, 'environment': null},
+        raw = cmd.replace('juju deploy ', '').split(' '),
+        deployment = null,
+        storage = $.localStorage;
+    while(raw.length > 0) {
+      var key = raw.shift();
+      if(key.startsWith('-')) {
+        // Long option, it's an object index
+        if(key.startsWith('--')) {
+          key = key.replace('--', '');
+        } else {
+          switch(key.replace('-', '')) {
+            case 'e':
+              key = 'environment';
+              break;
+            case 'n':
+              key = 'num-units'
+              break;
+            default:
+              term.echo('WARNING: Unrecognized short parameter, skipping');
+              continue;
+              break;
+          }
+        }
+        options[key] = raw.unshift();
+      } else {
+        // TODO: Alias deployments
+        options.charm = key;
+      }
+    }
+
+    if(!options.charm) {
+      term.error('error: no charm specified');
+    }
+
+    if(!options.environment) {
+      if(!window.file.exists('~/.juju/current-environment')) {
+        return term.error('Unable to find environment, did you run juju switch?');
+      }
+      options.environment = window.file.open('~/.juju/current-environment');
+    }
+
+    if(!storage.isSet(options.environment)) {
+      term.error('ERROR Unable to connect to environment {0}'.format(environment));
+      term.error('');
+      term.error("Please check your credentials or use 'juju bootstrap' to create a new environment.");
+      return
+    }
+
+    try {
+      deployment = new Deployment(storage.get(options.environment));
+    } catch(e) {
+      term.error('ERROR during Deployment: {0}'.format(e));
+    }
+
+    term.pause();
+    get_charm(options.charm, function(err, charm_data) {
+      if(err) {
+        term.error(err);
+      }
+      try {
+        deployment.deploy(charm_data.name, charm_data, options.to, options.num_units);
+      } catch(e) {
+        term.error('ERROR during deploy: {0}'.format(e));
+        term.resume();
+        return;
+      }
+
+      term.echo('Added charm "{0}" to the environment.'.format(charm_data.url));
+      term.resume();
+      storage.set(options.environment, deployment);
+    });
+  },
+  function(cmd, term, next) {
     // juju
     // juju help
     // juju help <topic>
