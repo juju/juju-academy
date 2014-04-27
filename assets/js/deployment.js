@@ -18,12 +18,42 @@ Deployment.prototype.bootstrap = function(constraints) {
   this.add_machine(constraints);
 };
 
-Deployment.prototype.status = function() {
-  return {
-    'environment': this.environment,
-    'machines': this.machines,
-    'services': this.services
-  };
+Deployment.prototype.status = function(filters) {
+  if(!filters) {
+    return {
+      'environment': this.environment,
+      'machines': this.machines,
+      'services': this.services
+    };
+  } else {
+    var machine_ids = [0],
+        machines = {},
+        services = {};
+    for(var i in filters) {
+      var service = filters[i];
+      if(!(service in this.services)) {
+        continue;
+      }
+
+      services[service] = this.services[service];
+      for(var unit in this.services[service].units) {
+        var unit_data = this.services[service].units[unit];
+        if($.inArray(unit_data.machine, machines) < 0) {
+          machine_ids.push(parseInt(unit_data.machine));
+        }
+      }
+    }
+
+    for(var m in machine_ids) {
+      machines[machine_ids[m]] = this.machines[machine_ids[m]];
+    }
+
+    return {
+      'environment': this.environment,
+      'machines': machines,
+      'services': services
+    };
+  }
 };
 
 Deployment.prototype.deploy = function(service, charm, to, units) {
