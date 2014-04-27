@@ -121,7 +121,7 @@ Deployment.prototype.add_machine = function(constraints) {
     // Bootstrap node request
     machine_index = "0";
   }
-  console.log(machine_index);
+
   if(!constraints) {
     constraints = {};
   }
