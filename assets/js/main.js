@@ -16,6 +16,21 @@ function load_commands(cmds) {
   });
 }
 
+// Parse key=val key1=val to an Object
+function parse_constraints(raw_constraints) {
+  var pairs = raw_constraints.split(' '),
+      constraints = {};
+  for(var pair in pairs) {
+    if(pair.indexOf('=') < 0) {
+      throw "Invalid constraint format. Expected 'constraint=value'";
+    }
+    var data = pair.split('=', 1);
+    constraints[data[0]] = data[1];
+  }
+
+  return constraints;
+}
+
 function ready_set_next() {
   ready = true;
   $('.sidebar .tasks .item').each(function() {
