@@ -70,11 +70,11 @@ Deployment.prototype.deploy = function(service, charm, to, units) {
       throw "error: machine {0} doesn't exist".format(to);
     }
     machine = to;
-  } else {
-    // TODO: Pass constraints from the command line, build machine, pass to add_unit
-    //if(constraints) {
-    //  machine = this.add_machine(constraints);
-    //}
+  //} else {
+  //  // TODO: Pass constraints from the command line, build machine, pass to add_unit
+  //  if(constraints) {
+  //    machine = this.add_machine(constraints);
+  //  }
   }
 
   if(!charm.id) {
