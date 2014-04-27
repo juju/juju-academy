@@ -34,8 +34,10 @@ load_commands([
     if(!m) {
       return next();
     }
+
     var environment = null,
         storage = $.localStorage;
+
     if(m[1]) {
       environment = m[1];
     } else if(window.file.exists('~/.juju/current-environment')) {
@@ -53,8 +55,8 @@ load_commands([
       return
     }
 
-    var s = storage.get(environment);
-    return term.echo(jsyaml.dump(s).trim());
+    var d = new Deployment(storage.get(environment));
+    return term.echo(jsyaml.dump(d.status()).trim());
   },
   function(cmd, term, next) {
     // JUJU BOOTSTRAP
@@ -65,6 +67,7 @@ load_commands([
       return next();
     }
     var environment = null,
+        deployment = null,
         storage = $.localStorage;
     if(m[1]) {
       environment = m[1];
@@ -73,31 +76,23 @@ load_commands([
     }
 
     if(!environment) {
-      term.error('error: open ~/.juju/environments.yaml: no such file or directory');
+      return term.error('error: open ~/.juju/environments.yaml: no such file or directory');
     }
 
     if(storage.isSet(environment)) {
       return term.error('ERROR {0} is already bootstrapped'.format(environment));
     }
 
-    var instance = (new Date).getTime();
-    var boot = {
-      'machines': {
-        '0': {
-          'agent-state': 'started',
-          'agent-version': '1.18.1',
-          'dns-name': '{0}.localhoast.com'.format(instance),
-          'hardware': 'arch=demo cpu-cores=1 cpu-power=∞ mem=1024M root-disk=8192M',
-          'instance-id': instance,
-          'instance-state': 'running',
-          'series': 'trusty'
-        }
-      },
-      'services': {}
-    };
+    try {
+      deployment = new Deployment(environment);
+      deployment.bootstrap();
+    } catch(e) {
+      return term.error('ERROR {0}'.format(e));
+    }
+
     term.pause();
     term.echo('Launching instance');
-    term.echo(' - {0}.localhoast.com'.format(instance));
+    term.echo(' - {0}'.format(deployment.machines['0']['dns-name']));
     term.echo('Waiting for address');
     setTimeout(function() {
       term.echo('Attempting to connect to :22');
@@ -114,7 +109,7 @@ load_commands([
       term.resume();
     }, 2100);
 
-    return storage.set(environment, boot);
+    return storage.set(environment, deployment);
   },
   function(cmd, term, next) {
     // JUJU INIT
