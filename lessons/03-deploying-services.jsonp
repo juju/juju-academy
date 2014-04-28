@@ -1,0 +1,33 @@
+load_lesson({
+  "name": "Deploy some services",
+  "description": [
+    "Now that you have a Juju environment bootstrapped, you can being the orchestration of that environment. This is done by deploying what is known as a Juju Charm. Charms are the encapsulated knowledge of everything needed to deploy, configure, and set up a service.",
+    "Juju has many charms already created for a majority of the most used and popular services. You can browse the <a href='https://manage.jujucharms.com/' target=_blank>charm store</a> to find more services.",
+    "In this example we'll deploy two services: MySQL, a popular database engine; and WordPress, a popular blogging engine.",
+    "Much like the other commands from previous lessons, juju has a <code>deploy</code> subcommand which, when given a charm name, will deploy that charm from the charm store.",
+    "Often times, when deploying a lot of services, the <code>juju status</code> output can become quite lengthy. The status command is able to filter on one or more services to help make queries more managable."
+  ],
+  "tasks": {
+    "00-deploy-wordpress": {
+      "name": "Deploy the WordPress charm",
+      "validate": "^juju deploy wordpress$",
+      "hint": "To deploy services, use <code>juju deploy [charm]</code>. <code>juju help deploy</code> has additional information"
+    },
+    "01-deploy-mysql": {
+      "name": "Deploy the MySQL charm",
+      "validate": "^juju deploy mysql",
+      "hint": "To deploy services, use <code>juju deploy [charm]</code>. <code>juju help deploy</code> has additional information"
+    },
+    "02-review-deployment": {
+      "name": "Review your deployed environment",
+      "validate": "^juju status($| -e academy$)",
+      "hint": "<code>juju status</code> provides the state of the environment"
+    },
+    "03-review-wordpress": {
+      "name": "Review just the WordPress service",
+      "validate": "^juju status (wordpress|-e academy wordpress)$",
+      "hint": "<code>juju status [service,]</code> provides the state of the service(s)"
+    }
+  }
+});
+
