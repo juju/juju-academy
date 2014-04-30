@@ -64,6 +64,53 @@ load_commands([
     return term.echo(jsyaml.dump(d.status(filter_on)).trim());
   },
   function(cmd, term, next) {
+    // JUJU ADD-UNIT
+    // juju add-unit <service>
+    // juju add-unit -n # <service>
+
+    var m = cmd.match('^juju add-unit ?(-n [0-9]+ |--num-units [0-9]+ )([a-z0-9]+)');
+    if(!m) {
+      return next();
+    }
+
+    var service = null,
+        environment = null,
+        num_units = 1,
+        storage = $.localStorage;
+
+    if(m[1]) {
+      num_units = m[1].split(' ')[2];
+    }
+
+    service = m[2];
+
+    if(!service) {
+      return term.error('error: no service specified');
+    }
+
+    if(num_units < 1) {
+      return term.error('error: --num-units must be a positive integer');
+    }
+
+    environment = window.file.open('~/.juju/current-environment');
+
+    if(!environment) {
+      term.error('ERROR Unable to connect to environment {0}'.format(environment));
+      term.error('');
+      term.error("Please check your credentials or use 'juju bootstrap' to create a new environment.");
+      return
+    }
+
+    try {
+      var deployment = new Deployment(storage.get(options.environment));
+      deployment.add_unit(service);
+    } catch(e) {
+      term.error('ERROR during Deployment: {0}'.format(e));
+    }
+
+    return term.echo('Added {0} units of {1}'.format(num_units, service));
+  },
+  function(cmd, term, next) {
     // JUJU BOOTSTRAP
     // juju bootstrap
     // juju bootstrap -e <env>
@@ -129,6 +176,49 @@ load_commands([
 
     window.file.save("~/.juju/environments.yaml", "default: hey\n  amazon:\n    key: val\n  academy:\n    user: test\n    value: demo");
     term.echo("A boilerplate environment configuration file has been written to ~/.juju/environments.yaml.\nEdit the file to configure your juju environment and run bootstrap.");
+  },
+  function(cmd, term, next) {
+    // JUJU ADD-RELATION
+    // juju add-RELATION <service> <service>
+    var m = cmd.match('^juju add-relation?(?: | -e ([a-z0-9A-Z]+) )([a-z0-9]+) ([a-z0-9]+)$')
+    if(!m) {
+      return next();
+    }
+
+    var environment = null,
+        storage = $.localStorage;
+
+    if(!m[2] || !m[3]) {
+      term.error('error: no service specified');
+    }
+
+    if(!environment) {
+      if(!window.file.exists('~/.juju/current-environment')) {
+        return term.error('Unable to find environment, did you run juju switch?');
+      }
+      environment = window.file.open('~/.juju/current-environment');
+    }
+
+    if(!storage.isSet(environment)) {
+      term.error('ERROR Unable to connect to environment {0}'.format(environment));
+      term.error('');
+      term.error("Please check your credentials or use 'juju bootstrap' to create a new environment.");
+      return
+    }
+
+    try {
+      var deployment = new Deployment(storage.get(environment));
+    } catch(e) {
+      term.error('ERROR during Deployment: {0}'.format(e));
+    }
+
+    try {
+      deployment.relate(m[2], m[3]);
+    } catch(e) {
+      term.error('error: {0}'.format(e));
+    }
+
+    term.echo('ADD REALTION MESSAGE FROM JUJU GOES HERE, WISH IT WAS EASIER TO FIND THIS OUT');
   },
   function(cmd, term, next) {
     // JUJU DEPLOY

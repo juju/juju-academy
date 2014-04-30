@@ -100,7 +100,41 @@ Deployment.prototype.deploy = function(service, charm, to, units) {
 };
 
 Deployment.prototype.relate = function(from, to) {
-  //
+  var m = '[a-z0-9]+:[a-z0-9]+',
+      from_service = null,
+      from_relation = null,
+      to_service = null,
+      to_relation = null;
+
+  if(from.match(m)) {
+    from_service = from.match(m)[0];
+    from_relation = from.match(m)[1];
+  } else {
+    from_service = from;
+  }
+
+  if(to.match(m)) {
+    to_service = to.match(m)[0];
+    to_relation = to.match(m)[1];
+  } else {
+    to_service = to;
+  }
+
+  if(!(from_service in this.services)) {
+    throw '{0} not found in deployment'.format(from_service);
+  }
+
+  if(!(to_service in this.services)) {
+    throw '{0} not found in deployment'.format(to_service);
+  }
+
+  if(!this.services[from_service].relations) {
+    this.services[from_service].relations = [to_service];
+  }
+
+  if(!this.services[to_service].relations) {
+    this.services[to_service].relations = [from_service];
+  }
 };
 
 Deployment.prototype.add_unit = function(service, num_units, to) {
