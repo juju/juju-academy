@@ -25,7 +25,7 @@ if (typeof String.prototype.contains != 'function') {
 }
 
 if (typeof String.prototype.startsWith != 'function') {
-  String.prototype.startsWith = function (s){
+  String.prototype.startsWith = function(s) {
     return this.indexOf(s) === 0;
   };
 }
