@@ -163,7 +163,7 @@ Deployment.prototype.add_unit = function(service, num_units, to) {
         unit_num = 0;
 
     if(previous_unit) {
-      unit_num = previous_unit.split('/')[1] + 1;
+      unit_num = parseInt(previous_unit.split('/')[1]) + 1;
     }
 
     var unit_name = '{0}/{1}'.format(service, unit_num);

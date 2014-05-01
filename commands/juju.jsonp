@@ -68,7 +68,8 @@ load_commands([
     // juju add-unit <service>
     // juju add-unit -n # <service>
 
-    var m = cmd.match('^juju add-unit ?(-n [0-9]+ |--num-units [0-9]+ )([a-z0-9]+)');
+    // var m = cmd.match('^juju add-unit ?(-n [0-9]+ |--num-units [0-9]+ )([a-z0-9]+)');
+    var m = cmd.match('^juju add-unit ([a-z0-9]+)');
     if(!m) {
       return next();
     }
@@ -77,12 +78,14 @@ load_commands([
         environment = null,
         num_units = 1,
         storage = $.localStorage;
+/*
 
     if(m[1]) {
       num_units = m[1].split(' ')[2];
     }
-
     service = m[2];
+*/
+    service = m[1];
 
     if(!service) {
       return term.error('error: no service specified');
@@ -102,13 +105,14 @@ load_commands([
     }
 
     try {
-      var deployment = new Deployment(storage.get(options.environment));
-      deployment.add_unit(service);
+      var deployment = new Deployment(storage.get(environment));
+      deployment.add_unit(service, num_units);
     } catch(e) {
-      term.error('ERROR during Deployment: {0}'.format(e));
+      return term.error('ERROR: {0}'.format(e));
     }
 
-    return term.echo('Added {0} units of {1}'.format(num_units, service));
+    term.echo('Added {0} units of {1}'.format(num_units, service));
+    return storage.set(environment, deployment);
   },
   function(cmd, term, next) {
     // JUJU BOOTSTRAP
