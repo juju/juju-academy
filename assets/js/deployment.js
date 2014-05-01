@@ -130,17 +130,21 @@ Deployment.prototype.relate = function(from, to) {
 
   if(!this.services[from_service].relations) {
     this.services[from_service].relations = [to_service];
+  } else {
+    this.services[from_service].relations.push(to_service);
   }
 
   if(!this.services[to_service].relations) {
     this.services[to_service].relations = [from_service];
+  } else {
+    this.services[to_service].relations.push(from_service);
   }
 };
 
 Deployment.prototype.add_unit = function(service, num_units, to) {
   var machine = null;
 
-  if(isNaN(num_units)) {
+  if(isNaN(parseInt(num_units))) {
     throw 'num_units is not a valid number';
   }
 

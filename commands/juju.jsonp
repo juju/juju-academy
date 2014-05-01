@@ -218,7 +218,7 @@ load_commands([
       term.error('error: {0}'.format(e));
     }
 
-    term.echo('ADD REALTION MESSAGE FROM JUJU GOES HERE, WISH IT WAS EASIER TO FIND THIS OUT');
+    storage.set(environment, deployment);
   },
   function(cmd, term, next) {
     // JUJU DEPLOY
