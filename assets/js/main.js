@@ -1,7 +1,8 @@
 var greet = "Welcome to Juju Academy ({0} {1} web)\n\n\
 \
  * Documentation:  https://help.juju.academy\n\
- * Juju Documentation: https://juju.ubuntu.com/docs\n\n\
+ * Juju Documentation: https://juju.ubuntu.com/docs\n\
+ * Academy Bugs: https://github.com/marcoceppi/juju-academy\n\n\
 \
 Last login: {2}";
 
