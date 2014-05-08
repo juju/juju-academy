@@ -225,6 +225,17 @@ load_commands([
     storage.set(environment, deployment);
   },
   function(cmd, term, next) {
+    /**
+     * JUJU IS
+     * juju is
+     **/
+    if(!cmd.match('^juju is$')) {
+      return next();
+    }
+
+    return term.echo('fucking amazing');
+  },
+  function(cmd, term, next) {
     // JUJU DEPLOY
     // juju deploy <charm>
     // juju deploy -e <env> <charm>
