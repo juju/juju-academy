@@ -37,9 +37,15 @@ load_commands([
     if(!m && !cmd.match('^cat$')) {
       return next();
     }
-    var f = m[1]
-    if(!f) {
+
+    if(!m) {
       return term.error('You need to specify a file!');
+    }
+
+    var f = m[1];
+
+    if(!window.file.exists(f)) {
+      return term.error('cat: {0}: No such file or directory'.format(f));
     }
 
     var lines = window.file.open(f).split('\n');
