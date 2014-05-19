@@ -1,7 +1,7 @@
 load_lesson({
   "name": "Deploy some services",
   "description": [
-    "Now that you have a Juju environment bootstrapped, you can being the orchestration of that environment. This is done by deploying what is known as a Juju Charm. Charms are the encapsulated knowledge of everything needed to deploy, configure, and set up a service.",
+    "Now that you have a Juju environment bootstrapped, you can begin the orchestration of that environment. This is done by deploying what is known as a Juju Charm. Charms are the encapsulated knowledge of everything needed to deploy, configure, and set up a service.",
     "Juju has many charms already created for a majority of the most used and popular services. You can browse the <a href='https://manage.jujucharms.com/' target=_blank>charm store</a> to find more services.",
     "In this example we'll deploy two services: MySQL, a popular database engine; and WordPress, a popular blogging engine.",
     "Much like the other commands from previous lessons, juju has a <code>deploy</code> subcommand which, when given a charm name, will deploy that charm from the charm store.",
