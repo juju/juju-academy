@@ -9,7 +9,7 @@ load_lesson({
   "tasks": {
     "00-create-juju-home": {
       "name": "Create a Juju environments file",
-      "validate": "^juju (init|generate)$",
+      "validate": "^juju (init|generate-config)$",
       "hint": "To create the JUJU_HOME structure, run <code>juju init</code>"},
     "01-edit-environments-yaml": {
       "name": "Update credentials in <code>environments.yaml</code> file",
