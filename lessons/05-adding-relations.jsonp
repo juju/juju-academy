@@ -1,0 +1,20 @@
+load_lesson({
+  "name": "Adding a relation",
+  "description": [
+    "Now that you you've installed Wordpress and MySQL, you need to create the relation between the two services. This is done by using the <code>juju add-relation</code> command.",
+    "There are four kinds of hooks in the relation lifecycle: joined, changed, broken, and departed. Each hook notifies the respective service of a change in their relationship and provides needed information, such as a database name and user credentials."
+  ],
+  "tasks": {
+    "00-add-relation": {
+      "name": "Add a relation between Wordpress and MySQL",
+      "validate": "^juju add-relation wordpress mysql$",
+      "hint": "To deploy services, use <code>juju add-relation [service 1] [service 2]</code>. <code>juju help add-relation</code> has additional information"
+    },
+    "01-verify-relation": {
+      "name": "Verify the relation between Wordpress and MySQL",
+      "validate": "^juju status (wordpress|mysql)",
+      "hint": "To deploy services, use <code>juju deploy [charm]</code>. <code>juju help deploy</code> has additional information"
+    }
+  }
+});
+
