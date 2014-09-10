@@ -6,7 +6,7 @@ load_commands([
     term.error('You need to specify a file to edit');
   },
   function(cmd, term, next) {
-    m = cmd.match('^edit (.*)');
+    m = cmd.match('^(?:edit|vi|nano|emacs|vim|pico) (.*)');
     if(!m) {
       return next();
     }
