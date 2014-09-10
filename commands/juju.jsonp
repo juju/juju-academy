@@ -171,7 +171,7 @@ load_commands([
     // JUJU INIT
     // juju init
     // juju generate
-    if(!cmd.match("^juju (init|generate)$")) {
+    if(!cmd.match("^juju (init|generate-config)$")) {
       return next();
     }
     if(window.file.exists('~/.juju/environments.yaml')) {
