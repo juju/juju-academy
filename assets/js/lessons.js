@@ -25,7 +25,7 @@ function load_lesson(l) {
   }
 
   $('.sidebar .lesson.description').html('<p>' + l.description + '</p>');
-  var task_line = $('<a class="item"><i class="green circle ok icon"></i><div class="content"><div class="sub"></div></div></a>');
+  var task_line = $('<a class="item"><i class="green circle ok icon"></i><div class="content header"><div class="sub"></div></div></a>');
   $('.sidebar .tasks.list').empty();
 
   // TODO: Holy fucking shit refactor this
@@ -40,8 +40,7 @@ function load_lesson(l) {
     t.children('.content')
       .prepend(v.name)
       .children('.sub')
-      .html(v.hint)
-      .hide();
+      .html(v.hint);
     t.attr('id', k);
 
     $('.sidebar .tasks.list').append(t);
