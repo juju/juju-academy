@@ -14,7 +14,7 @@ load_lesson({
     "01-edit-environments-yaml": {
       "name": "Update credentials in <code>environments.yaml</code> file",
       "validate": {
-        "match": "^edit ~/.juju/environments.yaml$",
+        "match": "^(edit|vi|nano|emacs|vim|pico) ~/.juju/environments.yaml$",
         "echo": "Launch an editor"},
       "hint": "Use the <code>edit</code> command to open <code>~/.juju/environments.yaml</code>"},
     "02-switch-to-academy": {
