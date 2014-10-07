@@ -3,7 +3,7 @@ load_lesson({
   "description": [
     "Configure, manage, maintain, deploy and scale efficiently with best-practice Charms on any public, private or hybrid cloud from a powerful GUI or the command-line.",
     "Juju enables you to use Charms to deploy your application architectures to EC2, OpenStack, Azure, HP your data center and even your own Ubuntu based laptop. Moving between environments is simple giving you the flexibility to switch hosts whenever you want — for free.",
-    "Once intalled, you can interact with Juju using the <code>juju</code> command. Juju has several sub-commands which dictate what Juju should do. You can run <code>juju help</code> at any time to review help topics",
+    "Once installed, you can interact with Juju using the <code>juju</code> command. Juju has several sub-commands which dictate what Juju should do. You can run <code>juju help</code> at any time to review help topics",
     "For this lesson, run the Juju command and list all the available commands for juju",
   ],
   "tasks": {

@@ -131,13 +131,21 @@ Deployment.prototype.relate = function(from, to) {
   if(!this.services[from_service].relations) {
     this.services[from_service].relations = [to_service];
   } else {
-    this.services[from_service].relations.push(to_service);
+    if($.inArray(to_service, this.services[from_service].relations) >= 0) {
+      throw 'ERROR cannot add relation "{0} {1}": relation already exists'.format(from_service, to_service)
+    } else {
+      this.services[from_service].relations.push(to_service);
+    }
   }
 
   if(!this.services[to_service].relations) {
     this.services[to_service].relations = [from_service];
   } else {
-    this.services[to_service].relations.push(from_service);
+    if($.inArray(from_service, this.services[to_service].relations) >= 0) {
+      throw 'ERROR cannot add relation "{0} {1}": relation already exists'.format(from_service, to_service)
+    } else {
+      this.services[to_service].relations.push(from_service);
+    }
   }
 };
 
