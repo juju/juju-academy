@@ -1,0 +1,39 @@
+load_lesson({
+  "name": "Configure some services",
+  "description": [
+    "In previous lessions we learned that Juju Charms are encapsulated knowledge of everything needed to deploy, configure, and set up a service.",
+    "Charms expose configuration that would be useful for running the service in different ways. This lession will cover how to get and set configuration of these services.",
+    "Now that Juju Charms are deployed you can change their configuration values. ",
+    "We will be exploring the juju <code>set</code> and <code>get</code> subcommands which assign and retrieve values from deployed instances.",
+    "In this lesson configure WordPress to use the apache engine, and tune the MySQL service's dataset-size to 128 Megabytes (M).",
+    "Go to the <a href='https://manage.jujucharms.com/charms/precise/wordpress' target=_blank>WordPress charm page</a> and click on '<a href='https://manage.jujucharms.com/charms/precise/wordpress/config' target=_blank>Config details</a>' for more information about the configuration options."
+
+  ],
+  "tasks": {
+    "00-get-wordpress": {
+      "name": "Get the current configuration values for WordPress or MySQL services.",
+      "validate": "^juju get (wordpress|mysql)$",
+      "hint": "To retrieve all configuration values on the current deployment, use <code>juju get [charm]</code>. The command <code>juju help get</code> has additional information for the options of the get command."
+    },
+    "01-set-engine-wordpress": {
+      "name": "Make the WordPress service use apache engine.",
+      "validate": "^juju set wordpress engine=apache$",
+      "hint": "To assign configuration values on the deployment, use <code>juju set [charm]</code>. The command <code>juju help set</code> has additional information for the options of the set command."
+    },
+    "02-get-wordpress": {
+      "name": "Get the current configuration values from WordPress service.",
+      "validate": "^juju get wordpress$",
+      "hint": "To retrieve all configuration values on the current deployment, use <code>juju get [charm]</code>. The command <code>juju help get</code> has additional information for the options of the get command."
+    },
+    "03-set-dataset-size-mysql": {
+      "name": "Tune the MySQL service dataset-size to 128 Megabytes (M).",
+      "validate": "^juju set mysql dataset-size=128M$",
+      "hint": "To assign configuration values on the MySQL deployment, use the <code>juju set [charm]</code>. M is short for Megabytes."
+    },
+    "04-get-mysql": {
+      "name": "Get the current configuration values from MySQL service.",
+      "validate": "^juju get mysql$",
+      "hint": "To retrieve all configuration values on the current deployment, use <code>juju get [charm]</code>. The command <code>juju help get</code> has additional information for the options of the get command."
+    }
+  }
+});
