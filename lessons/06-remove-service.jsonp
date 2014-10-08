@@ -1,0 +1,29 @@
+load_lesson({
+  "name": "Removing a Service",
+  "description": [
+    "After you have deployed a service you may want to remove services individually. This may be done for a variety of reasons, one being to releases resources back once a given service has fulfilled its purpose and come to the end of its life cycle. To do so you will need to first remove the service and if you wish the machine it was deployed onto. This is done by using the <code>juju remove-service</code> command. Note, if you wish to remove a machine assoicted with a given service you will need to utlize <code>juju status</code> to see which machine has been allocated to the given service before removing the service.",
+    "Need to define where this is located."
+  ],
+  "tasks": {
+    "00-deploy-service": {
+      "name": "Deploy a service such as postgresql.",
+      "validate": "^juju deploy postgresql$",
+      "hint": "To deploy a service, use <code>juju deploy [charm]</code>. <code>juju help status</code> has additional information"
+    },
+    "01-status-service": {
+      "name": "Display service status of postgresql service.",
+      "validate": "^juju status postgresql$",
+      "hint": "To display service status, use <code>juju status [charm]</code>. <code>juju help status</code> has additional information"
+    },
+    "02-remove-service": {
+      "name": "Remove the postgresql service.",
+      "validate": "^juju remove-service postgresql$",
+      "hint": "To remove a service, use <code>juju remove-service [charm]</code>. <code>juju help remove-service</code> has additional information"
+    },
+    "03-remove-service": {
+      "name": "Remove the machine the service was deployed to.",
+      "validate": "^juju remove-machine [0-9]",
+      "hint": "To remove a machine, use <code>juju remove-machine [machine]</code>. <code>juju help remove-machine</code> has additional information"
+    }
+  }
+});
