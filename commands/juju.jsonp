@@ -380,6 +380,39 @@ load_commands([
     }
   },
   function(cmd, term, next) {
+    if(!cmd.match('^juju (remove-service|destroy-service)(.*)$')) {
+      return next();
+    }
+
+    var m = cmd.match('^juju (remove-service|destroy-service) (.*)');
+    var service;
+    try {
+      service = m[2];
+    } catch(e) {
+      service = false;
+    }
+
+    if(!service) {
+      return term.error('error: no service specified');
+    }
+
+    var environment = window.file.open('~/.juju/current-environment');
+    var storage = $.localStorage;
+    if(!storage.isSet(environment)) {
+      term.error('ERROR environment is not bootstrapped');
+      return;
+    }
+
+    // Get the deployment for an environment.
+    var d = new Deployment(storage.get(environment));
+    try {
+      d.destroy_service(service);
+    } catch(e) {
+      return term.error(e);
+    }
+    storage.set(environment, d);
+  },
+  function(cmd, term, next) {
     // JUJU ?
     if(!cmd.match("^juju .*$")) {
       return next();
