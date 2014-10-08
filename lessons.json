@@ -5,6 +5,7 @@
     "lessons/02-time-to-bootstrap.jsonp",
     "lessons/03-deploying-services.jsonp",
     "lessons/04-service-configuration.jsonp",
-    "lessons/05-adding-relations.jsonp"
+    "lessons/05-adding-relations.jsonp",
+    "lessons/99-juju-gui.jsonp"
   ]
 }
