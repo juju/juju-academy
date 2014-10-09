@@ -169,7 +169,7 @@ load_commands([
   },
   function(cmd, term, next) {
     // juju get
-    var m = cmd.match('^juju get(?:$| ([a-z]+))$');
+    var m = cmd.match('^juju get(?:$| ([a-z_-]+))$');
     if(!m) {
       return next();
     }
@@ -216,7 +216,7 @@ load_commands([
   function(cmd, term, next) {
     // juju set
 
-    var m = cmd.match('^juju set ([a-z0-9A-Z]+)');
+    var m = cmd.match('^juju set ([a-z0-9_-]+)');
     if(!m) {
       return next();
     }
@@ -233,7 +233,7 @@ load_commands([
       return;
     }
 
-    m = cmd.match('^juju set {0} ([a-z0-9A-Z_-]+)=(["a-z0-9A-Z-_]+)$'.format(service));
+    m = cmd.match('^juju set {0} ([a-z0-9_-]+)=(["a-z0-9-_]+)$'.format(service));
     if(m && m[1] && m[2]) {
       deployment.set(service, m[1], m[2]);
       storage.set(environment, deployment);
