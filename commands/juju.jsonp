@@ -57,7 +57,7 @@ load_commands([
       term.error('ERROR Unable to connect to environment {0}'.format(environment));
       term.error('');
       term.error("Please check your credentials or use 'juju bootstrap' to create a new environment.");
-      return
+      return;
     }
 
     var d = new Deployment(storage.get(environment));
@@ -101,7 +101,7 @@ load_commands([
       term.error('ERROR Unable to connect to environment {0}'.format(environment));
       term.error('');
       term.error("Please check your credentials or use 'juju bootstrap' to create a new environment.");
-      return
+      return;
     }
 
     try {
@@ -168,6 +168,80 @@ load_commands([
     return storage.set(environment, deployment);
   },
   function(cmd, term, next) {
+    // juju get
+    var m = cmd.match('^juju get(?:$| ([a-z_-]+))$');
+    if(!m) {
+      return next();
+    }
+
+    var environment = null,
+        deployment = null,
+        storage = $.localStorage;
+
+    if(!m[1]) {
+      return term.echo("error: no service name specified");
+    }
+    service = m[1];
+
+    environment = window.file.open('~/.juju/current-environment');
+
+    deployment = new Deployment(storage.get(environment));
+    if(deployment.is_deployed(service)) {
+      get_charm(service, function(err, charm_data) {
+        if(err) {
+          term.error(err);
+        }
+        try {
+          term.pause();
+
+          $.each(deployment.config[service], function(index, opt) {
+            term.echo('\t{0}:'.format(index));
+            term.echo("\t\tdefault: {0}".format(opt.default));
+            term.echo("\t\tdescription: {0}".format(opt.description));
+            term.echo("\t\ttype: {0}".format(opt.type));
+            term.echo("\t\tvalue: {0}".format(opt.value));
+          });
+
+          term.resume();
+        } catch(e) {
+          term.error('ERROR during deploy: {0}'.format(e));
+          term.resume();
+          return;
+        }
+
+      });
+      return;
+    }
+  },
+  function(cmd, term, next) {
+    // juju set
+
+    var m = cmd.match('^juju set ([a-z0-9_-]+)');
+    if(!m) {
+      return next();
+    }
+    service = m[1];
+    var environment = null,
+        deployment = null,
+        storage = $.localStorage;
+
+    environment = window.file.open('~/.juju/current-environment');
+
+    deployment = new Deployment(storage.get(environment));
+    if(!deployment.is_deployed(service)) {
+      term.error('ERROR service "{0}" not found'.format(service));
+      return;
+    }
+
+    m = cmd.match('^juju set {0} ([a-z0-9_-]+)=(["a-z0-9-_]+)$'.format(service));
+    if(m && m[1] && m[2]) {
+      deployment.set(service, m[1], m[2]);
+      storage.set(environment, deployment);
+    }
+    return;
+
+  },
+  function(cmd, term, next) {
     // JUJU INIT
     // juju init
     // juju generate
@@ -184,7 +258,7 @@ load_commands([
   function(cmd, term, next) {
     // JUJU ADD-RELATION
     // juju add-RELATION <service> <service>
-    var m = cmd.match('^juju add-relation?(?: | -e ([a-z0-9A-Z]+) )([a-z0-9]+) ([a-z0-9]+)$')
+    var m = cmd.match('^juju add-relation?(?: | -e ([a-z0-9A-Z]+) )([a-z0-9]+) ([a-z0-9]+)$');
     if(!m) {
       return next();
     }
@@ -207,7 +281,7 @@ load_commands([
       term.error('ERROR Unable to connect to environment {0}'.format(environment));
       term.error('');
       term.error("Please check your credentials or use 'juju bootstrap' to create a new environment.");
-      return
+      return;
     }
 
     try {
@@ -261,7 +335,7 @@ load_commands([
               key = 'environment';
               break;
             case 'n':
-              key = 'num-units'
+              key = 'num-units';
               break;
             default:
               term.echo('WARNING: Unrecognized short parameter, skipping');
@@ -291,7 +365,7 @@ load_commands([
       term.error('ERROR Unable to connect to environment {0}'.format(environment));
       term.error('');
       term.error("Please check your credentials or use 'juju bootstrap' to create a new environment.");
-      return
+      return;
     }
 
     try {

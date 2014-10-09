@@ -8,6 +8,7 @@ var Deployment = function(name) {
   this.environment = name;
   this.machines = data.machines || {};
   this.services = data.services || {};
+  this.config = data.config || {};
   this.charms = data.charms || {};
   this.juju_version = data.juju_version || '1.18.1';
 
@@ -96,6 +97,16 @@ Deployment.prototype.deploy = function(service, charm, to, units) {
     'units': {}
   };
 
+  this.config[service] = {};
+  var self = this;
+  $.each(charm.options, function(index, option) {
+    self.config[service][index] = {};
+    self.config[service][index].default = true;
+    self.config[service][index].type = option.type;
+    self.config[service][index].description = option.description;
+    self.config[service][index].value = option.default;
+  });
+
   this.add_unit(service, units, to);
 };
 
@@ -132,7 +143,7 @@ Deployment.prototype.relate = function(from, to) {
     this.services[from_service].relations = [to_service];
   } else {
     if($.inArray(to_service, this.services[from_service].relations) >= 0) {
-      throw 'ERROR cannot add relation "{0} {1}": relation already exists'.format(from_service, to_service)
+      throw 'ERROR cannot add relation "{0} {1}": relation already exists'.format(from_service, to_service);
     } else {
       this.services[from_service].relations.push(to_service);
     }
@@ -142,7 +153,7 @@ Deployment.prototype.relate = function(from, to) {
     this.services[to_service].relations = [from_service];
   } else {
     if($.inArray(from_service, this.services[to_service].relations) >= 0) {
-      throw 'ERROR cannot add relation "{0} {1}": relation already exists'.format(from_service, to_service)
+      throw 'ERROR cannot add relation "{0} {1}": relation already exists'.format(from_service, to_service);
     } else {
       this.services[to_service].relations.push(from_service);
     }
@@ -226,12 +237,26 @@ Deployment.prototype.add_machine = function(constraints) {
   return machine_index;
 };
 
+Deployment.prototype.is_deployed = function(service) {
+  return $.inArray(service, this.services);
+};
+
+Deployment.prototype.set = function(service, key, value) {
+  try {
+    this.config[service][key].value = value;
+    this.config[service][key].default = false;
+  }
+  catch(e) {
+    throw "ERROR: {0}".format(e);
+  }
+};
+
 Deployment.prototype.destroy_service = function(service) {
   if(!(service in this.services)) {
     throw 'ERROR service "{0}" not found'.format(service);
   }
   // <3 check if units in error
-  delete this.services[service]
+  delete this.services[service];
 };
 
 Deployment.prototype.toString = function() {

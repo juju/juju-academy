@@ -33,7 +33,7 @@ Commands.prototype.add = function(match, priority) {
 };
 
 Commands.prototype.run = function(cmd, term) {
-  this._exec(cmd, term, 0);
+  this._exec($.trim(cmd.toLowerCase()), term, 0);
 };
 
 Commands.prototype._exec = function(cmd, term, key) {
