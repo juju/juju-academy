@@ -251,6 +251,14 @@ Deployment.prototype.set = function(service, key, value) {
   }
 };
 
+Deployment.prototype.destroy_service = function(service) {
+  if(!(service in this.services)) {
+    throw 'ERROR service "{0}" not found'.format(service);
+  }
+  // <3 check if units in error
+  delete this.services[service];
+};
+
 Deployment.prototype.toString = function() {
   return JSON.stringify(this.status());
 };

@@ -1,0 +1,31 @@
+load_lesson({
+  "name": "Juju GUI",
+  "description": [
+    "The Juju GUI is a web based tool which you can use to interact with your environment much in the way you use the CLI. It is deployed with Juju to each environment.",
+    "As the Juju GUI uses the same API as the Juju CLI it has a nearly 100% feature parity with what you can achieve on the command line and can even perform some addional actions not yet available in the CLI such as bundle creation and transactions.",
+    "In order to maintain density, many users choose to deploy the GUI to the bootstrap node (machine 0) which the GUI will safely do."
+  ],
+  "tasks": {
+    "00-deploy-gui": {
+      "name": "Deploy the Juju GUI to the bootstrap node",
+      "validate": "^juju deploy (--to 0) juju-gui$",
+      "hint": "<code>juju deploy --to 0 juju-gui</code> will complete this task"
+    },
+    "01-expose-gui": {
+      "name": "Expose the Juju GUI",
+      "validate": "^juju expose juju-gui",
+      "hint": "<code>juju expose juju-gui</code> to have the GUI exposed"
+    },
+    "02-login": {
+      "name": "Get password for Juju API",
+      "validate": function(cmd, term, next) {
+        if(!cmd.match("^juju api-info password$")) {
+          return next(true);
+        }
+        $('.ui.gui').modal('show');
+        return next();
+      },
+      "hint": "<code>juju api-info password</code> will display the API password"
+    }
+  }
+});
